@@ -94,25 +94,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
       const userId = authData.user.id;
 
-      // Create tenant
-      const { data: tenant, error: tenantError } = await supabase
-        .from('tenants')
-        .insert({ name: orgName })
-        .select()
-        .single();
+      // Use security definer function to create tenant, update profile, and assign role
+      const { error: rpcError } = await supabase.rpc('register_organization', {
+        _user_id: userId,
+        _org_name: orgName,
+        _full_name: fullName,
+      });
 
-      if (tenantError) return { error: new Error(tenantError.message) };
-
-      // Update profile with tenant
-      await supabase
-        .from('profiles')
-        .update({ tenant_id: tenant.id, full_name: fullName })
-        .eq('id', userId);
-
-      // Assign client_admin role
-      await supabase
-        .from('user_roles')
-        .insert({ user_id: userId, tenant_id: tenant.id, role: 'client_admin' });
+      if (rpcError) return { error: new Error(rpcError.message) };
 
       return { error: null };
     } catch (err) {
