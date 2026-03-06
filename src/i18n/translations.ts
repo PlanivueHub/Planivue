@@ -219,6 +219,19 @@ export const translations = {
   'contract.delete_confirm': { fr: 'Voulez-vous vraiment supprimer', en: 'Are you sure you want to delete' },
   'contract.filter_all_statuses': { fr: 'Tous les statuts', en: 'All statuses' },
   'contract.clear_filters': { fr: 'Effacer les filtres', en: 'Clear filters' },
+
+  // Settings
+  'settings.subtitle': { fr: 'Gérez votre profil et vos préférences', en: 'Manage your profile and preferences' },
+  'settings.profile': { fr: 'Profil', en: 'Profile' },
+  'settings.profile_desc': { fr: 'Mettez à jour vos informations personnelles', en: 'Update your personal information' },
+  'settings.profile_updated': { fr: 'Profil mis à jour', en: 'Profile updated' },
+  'settings.change_password': { fr: 'Changer le mot de passe', en: 'Change Password' },
+  'settings.password_desc': { fr: 'Mettez à jour votre mot de passe de connexion', en: 'Update your login password' },
+  'settings.new_password': { fr: 'Nouveau mot de passe', en: 'New password' },
+  'settings.update_password': { fr: 'Mettre à jour le mot de passe', en: 'Update password' },
+  'settings.password_updated': { fr: 'Mot de passe mis à jour', en: 'Password updated' },
+  'settings.password_min': { fr: 'Le mot de passe doit contenir au moins 6 caractères', en: 'Password must be at least 6 characters' },
+  'settings.password_mismatch': { fr: 'Les mots de passe ne correspondent pas', en: 'Passwords do not match' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
