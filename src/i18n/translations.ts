@@ -28,6 +28,7 @@ export const translations = {
   'auth.login_subtitle': { fr: 'Accédez à votre espace de planification', en: 'Access your planning workspace' },
   'auth.register_subtitle': { fr: 'Créez votre organisation et commencez à planifier', en: 'Create your organization and start planning' },
   'auth.loading': { fr: 'Chargement...', en: 'Loading...' },
+  'auth.employee_notice': { fr: 'Vous êtes employé ? Demandez une invitation à votre administrateur.', en: 'Are you an employee? Ask your administrator for an invitation link.' },
 
   // SaaS Dashboard
   'saas.title': { fr: 'Tableau de bord Plateforme', en: 'Platform Dashboard' },
