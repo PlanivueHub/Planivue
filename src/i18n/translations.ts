@@ -147,6 +147,15 @@ export const translations = {
   'sched.deleted': { fr: 'Horaire supprimé', en: 'Schedule deleted' },
   'sched.delete_title': { fr: 'Supprimer l\'horaire', en: 'Delete Schedule' },
   'sched.delete_confirm': { fr: 'Voulez-vous vraiment supprimer', en: 'Are you sure you want to delete' },
+
+  // My Schedule (Employee)
+  'mysched.title': { fr: 'Mon horaire', en: 'My Schedule' },
+  'mysched.subtitle': { fr: 'Consultez vos quarts de travail assignés', en: 'View your assigned shifts' },
+  'mysched.no_shifts': { fr: 'Aucun quart de travail assigné', en: 'No shifts assigned' },
+  'mysched.upcoming': { fr: 'À venir', en: 'Upcoming' },
+  'mysched.past': { fr: 'Passés', en: 'Past' },
+  'mysched.today': { fr: "Aujourd'hui", en: 'Today' },
+  'mysched.tomorrow': { fr: 'Demain', en: 'Tomorrow' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

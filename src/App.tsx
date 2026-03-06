@@ -16,6 +16,7 @@ import InvitationsPage from "./pages/InvitationsPage";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
+import MySchedulePage from "./pages/MySchedulePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -63,7 +64,11 @@ const App = () => (
                   </ProtectedRoute>
                 } />
                 <Route path="/contracts" element={<Dashboard />} />
-                <Route path="/my-schedule" element={<Dashboard />} />
+                <Route path="/my-schedule" element={
+                  <ProtectedRoute roles={['client_employee']}>
+                    <MySchedulePage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/settings" element={<Dashboard />} />
               </Route>
 
