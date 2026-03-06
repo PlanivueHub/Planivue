@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { UserCheck, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import ThemeToggle from '@/components/layout/ThemeToggle';
+import planivueLogo from '@/assets/planivue-logo.png';
 
 const Login = () => {
   const { signIn, user, loading } = useAuth();
