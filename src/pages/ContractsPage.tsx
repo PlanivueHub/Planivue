@@ -33,6 +33,9 @@ const ContractsPage = () => {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [filterStatus, setFilterStatus] = useState<ContractStatus | 'all'>('all');
+  const [sortField, setSortField] = useState<'title' | 'client_name' | 'start_date' | 'value'>('start_date');
+  const [sortAsc, setSortAsc] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Contract | null>(null);
   const [submitting, setSubmitting] = useState(false);
