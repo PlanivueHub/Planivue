@@ -126,7 +126,7 @@ const Dashboard = () => {
       {/* Summary cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {summaryCards.map((card) => (
-          <Card key={card.label} className="border-border/50">
+          <Card key={card.label} className="border-border/50 cursor-pointer transition-all hover:shadow-md hover:border-primary/50" onClick={card.onClick}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-medium text-muted-foreground">{card.label}</CardTitle>
               <card.icon className={`h-4 w-4 ${card.color}`} />
