@@ -130,10 +130,32 @@ const ContractsPage = () => {
     fetchContracts();
   };
 
-  const filtered = contracts.filter((c) =>
-    c.title.toLowerCase().includes(search.toLowerCase()) ||
-    c.client_name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = contracts
+    .filter((c) => {
+      const matchesSearch =
+        c.title.toLowerCase().includes(search.toLowerCase()) ||
+        c.client_name.toLowerCase().includes(search.toLowerCase());
+      const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      let cmp = 0;
+      switch (sortField) {
+        case 'title': cmp = a.title.localeCompare(b.title); break;
+        case 'client_name': cmp = a.client_name.localeCompare(b.client_name); break;
+        case 'start_date': cmp = new Date(a.start_date).getTime() - new Date(b.start_date).getTime(); break;
+        case 'value': cmp = (a.value ?? 0) - (b.value ?? 0); break;
+      }
+      return sortAsc ? cmp : -cmp;
+    });
+
+  const toggleSort = (field: typeof sortField) => {
+    if (sortField === field) setSortAsc(!sortAsc);
+    else { setSortField(field); setSortAsc(true); }
+  };
+
+  const hasActiveFilters = filterStatus !== 'all' || search !== '';
+  const clearFilters = () => { setFilterStatus('all'); setSearch(''); };
 
   const statusCfg: Record<string, { variant: 'secondary' | 'default' | 'destructive' | 'outline'; dot: string }> = {
     draft: { variant: 'secondary', dot: 'bg-muted-foreground' },
