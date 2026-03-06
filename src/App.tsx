@@ -14,6 +14,7 @@ import Dashboard from "./pages/Dashboard";
 import SaasOwnerDashboard from "./pages/SaasOwnerDashboard";
 import InvitationsPage from "./pages/InvitationsPage";
 import AcceptInvitation from "./pages/AcceptInvitation";
+import TeamPage from "./pages/TeamPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
