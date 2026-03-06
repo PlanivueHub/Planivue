@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Building2, Users, Shield, Activity, Search, TrendingUp, CalendarDays, Clock } from 'lucide-react';
+import { Building2, Users, Shield, Activity, Search, TrendingUp, CalendarDays, Clock, CalendarCheck, Layers } from 'lucide-react';
 import type { Tenant, PlatformMetrics } from '@/types/database';
 import { Navigate } from 'react-router-dom';
 import { format, formatDistanceToNow } from 'date-fns';
