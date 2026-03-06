@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Users, CalendarDays, FileText, DollarSign, AlertTriangle, TrendingUp } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import RecentActivityFeed from '@/components/dashboard/RecentActivityFeed';
+import LaborCostBreakdown from '@/components/dashboard/LaborCostBreakdown';
 import { format, differenceInDays, addDays } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Contract } from '@/types/database';
@@ -230,6 +231,9 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Labor Cost Breakdown */}
+      <LaborCostBreakdown />
 
       {/* Recent Activity Feed */}
       {profile?.tenant_id && <RecentActivityFeed tenantId={profile.tenant_id} />}

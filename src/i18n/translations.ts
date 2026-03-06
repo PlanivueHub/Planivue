@@ -80,6 +80,12 @@ export const translations = {
   'dashboard.activity_joined': { fr: 'A rejoint l\'équipe', en: 'Joined the team' },
   'dashboard.activity_new': { fr: 'Nouveau', en: 'New' },
   'dashboard.activity_unknown_member': { fr: 'Membre inconnu', en: 'Unknown member' },
+  'dashboard.labor_cost_breakdown': { fr: 'Ventilation des coûts de main-d\'œuvre', en: 'Labor Cost Breakdown' },
+  'dashboard.labor_cost_desc': { fr: 'Répartition mensuelle des coûts par catégorie', en: 'Monthly cost distribution by category' },
+  'dashboard.regular_hours': { fr: 'Heures régulières', en: 'Regular Hours' },
+  'dashboard.overtime': { fr: 'Heures supplémentaires', en: 'Overtime' },
+  'dashboard.benefits': { fr: 'Avantages sociaux', en: 'Benefits' },
+  'dashboard.profit': { fr: 'Profit', en: 'Profit' },
 
   // Common
   'common.loading': { fr: 'Chargement...', en: 'Loading...' },
