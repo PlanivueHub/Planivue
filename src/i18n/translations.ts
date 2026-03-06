@@ -73,6 +73,32 @@ export const translations = {
   // App
   'app.name': { fr: 'PlanifyHub', en: 'PlanifyHub' },
   'app.tagline': { fr: 'Intelligence de planification', en: 'Planning Intelligence' },
+
+  // Invitations
+  'inv.title': { fr: 'Gestion des invitations', en: 'Invitation Management' },
+  'inv.subtitle': { fr: 'Invitez des membres à rejoindre votre organisation', en: 'Invite members to join your organization' },
+  'inv.new': { fr: 'Nouvelle invitation', en: 'New Invitation' },
+  'inv.send': { fr: 'Créer l\'invitation', en: 'Create Invitation' },
+  'inv.email': { fr: 'Adresse courriel', en: 'Email address' },
+  'inv.role': { fr: 'Rôle', en: 'Role' },
+  'inv.status': { fr: 'Statut', en: 'Status' },
+  'inv.expires': { fr: 'Expire le', en: 'Expires' },
+  'inv.created': { fr: 'Créée le', en: 'Created' },
+  'inv.pending': { fr: 'En attente', en: 'Pending' },
+  'inv.accepted': { fr: 'Acceptée', en: 'Accepted' },
+  'inv.expired': { fr: 'Expirée', en: 'Expired' },
+  'inv.copy_link': { fr: 'Copier le lien', en: 'Copy Link' },
+  'inv.copied': { fr: 'Lien copié !', en: 'Link copied!' },
+  'inv.no_invitations': { fr: 'Aucune invitation', en: 'No invitations' },
+  'inv.success': { fr: 'Invitation créée avec succès', en: 'Invitation created successfully' },
+  'inv.delete_confirm': { fr: 'Supprimer cette invitation ?', en: 'Delete this invitation?' },
+
+  // Accept invitation
+  'inv.accept_title': { fr: 'Rejoindre l\'organisation', en: 'Join Organization' },
+  'inv.accept_subtitle': { fr: 'Vous avez été invité à rejoindre une organisation', en: 'You have been invited to join an organization' },
+  'inv.accept_btn': { fr: 'Créer mon compte', en: 'Create my account' },
+  'inv.invalid_token': { fr: 'Ce lien d\'invitation est invalide ou expiré', en: 'This invitation link is invalid or expired' },
+  'inv.already_accepted': { fr: 'Cette invitation a déjà été acceptée', en: 'This invitation has already been accepted' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
