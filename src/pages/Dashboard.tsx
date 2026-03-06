@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Users, CalendarDays, FileText, DollarSign, AlertTriangle, TrendingUp } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import RecentActivityFeed from '@/components/dashboard/RecentActivityFeed';
 import { format, differenceInDays, addDays } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Contract } from '@/types/database';
@@ -228,6 +229,9 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Recent Activity Feed */}
+      {profile?.tenant_id && <RecentActivityFeed tenantId={profile.tenant_id} />}
 
       {/* Expiring soon alerts */}
       <Card className="border-border/50">
