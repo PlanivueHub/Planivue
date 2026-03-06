@@ -232,6 +232,9 @@ const Dashboard = () => {
         </Card>
       </div>
 
+      {/* Labor Cost Breakdown */}
+      <LaborCostBreakdown />
+
       {/* Recent Activity Feed */}
       {profile?.tenant_id && <RecentActivityFeed tenantId={profile.tenant_id} />}
 
