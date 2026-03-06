@@ -216,6 +216,8 @@ export const translations = {
   'contract.deleted': { fr: 'Contrat supprimé', en: 'Contract deleted' },
   'contract.delete_title': { fr: 'Supprimer le contrat', en: 'Delete Contract' },
   'contract.delete_confirm': { fr: 'Voulez-vous vraiment supprimer', en: 'Are you sure you want to delete' },
+  'contract.filter_all_statuses': { fr: 'Tous les statuts', en: 'All statuses' },
+  'contract.clear_filters': { fr: 'Effacer les filtres', en: 'Clear filters' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

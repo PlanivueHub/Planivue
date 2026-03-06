@@ -18,7 +18,7 @@ import {
   AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
   AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Plus, FileText, CalendarIcon, Search, Trash2, Edit, DollarSign } from 'lucide-react';
+import { Plus, FileText, CalendarIcon, Search, Trash2, Edit, DollarSign, ArrowUpDown, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
@@ -33,6 +33,9 @@ const ContractsPage = () => {
   const [contracts, setContracts] = useState<Contract[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [filterStatus, setFilterStatus] = useState<ContractStatus | 'all'>('all');
+  const [sortField, setSortField] = useState<'title' | 'client_name' | 'start_date' | 'value'>('start_date');
+  const [sortAsc, setSortAsc] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editing, setEditing] = useState<Contract | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -127,10 +130,32 @@ const ContractsPage = () => {
     fetchContracts();
   };
 
-  const filtered = contracts.filter((c) =>
-    c.title.toLowerCase().includes(search.toLowerCase()) ||
-    c.client_name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filtered = contracts
+    .filter((c) => {
+      const matchesSearch =
+        c.title.toLowerCase().includes(search.toLowerCase()) ||
+        c.client_name.toLowerCase().includes(search.toLowerCase());
+      const matchesStatus = filterStatus === 'all' || c.status === filterStatus;
+      return matchesSearch && matchesStatus;
+    })
+    .sort((a, b) => {
+      let cmp = 0;
+      switch (sortField) {
+        case 'title': cmp = a.title.localeCompare(b.title); break;
+        case 'client_name': cmp = a.client_name.localeCompare(b.client_name); break;
+        case 'start_date': cmp = new Date(a.start_date).getTime() - new Date(b.start_date).getTime(); break;
+        case 'value': cmp = (a.value ?? 0) - (b.value ?? 0); break;
+      }
+      return sortAsc ? cmp : -cmp;
+    });
+
+  const toggleSort = (field: typeof sortField) => {
+    if (sortField === field) setSortAsc(!sortAsc);
+    else { setSortField(field); setSortAsc(true); }
+  };
+
+  const hasActiveFilters = filterStatus !== 'all' || search !== '';
+  const clearFilters = () => { setFilterStatus('all'); setSearch(''); };
 
   const statusCfg: Record<string, { variant: 'secondary' | 'default' | 'destructive' | 'outline'; dot: string }> = {
     draft: { variant: 'secondary', dot: 'bg-muted-foreground' },
@@ -261,14 +286,38 @@ const ContractsPage = () => {
 
       {/* Table */}
       <Card className="border-border/50">
-        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <CardTitle className="font-display text-lg">{t('nav.contracts')}</CardTitle>
-            <CardDescription>{t('contract.table_desc')}</CardDescription>
+        <CardHeader className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="font-display text-lg">{t('nav.contracts')}</CardTitle>
+              <CardDescription>{t('contract.table_desc')}</CardDescription>
+            </div>
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+            </div>
           </div>
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <div className="flex flex-wrap items-center gap-2">
+            <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as ContractStatus | 'all')}>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder={t('contract.contract_status')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('contract.filter_all_statuses')}</SelectItem>
+                {statusOptions.map((s) => (
+                  <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {hasActiveFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1 text-xs text-muted-foreground">
+                <X className="h-3 w-3" />
+                {t('contract.clear_filters')}
+              </Button>
+            )}
+            <span className="ml-auto text-xs text-muted-foreground">
+              {filtered.length} / {contracts.length}
+            </span>
           </div>
         </CardHeader>
         <CardContent>
@@ -287,11 +336,19 @@ const ContractsPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('contract.contract_title')}</TableHead>
-                    <TableHead>{t('contract.client_name')}</TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('title')}>
+                      <span className="flex items-center gap-1">{t('contract.contract_title')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('client_name')}>
+                      <span className="flex items-center gap-1">{t('contract.client_name')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
                     <TableHead>{t('saas.status')}</TableHead>
-                    <TableHead>{t('sched.start_date')}</TableHead>
-                    <TableHead className="text-right">{t('contract.value')}</TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('start_date')}>
+                      <span className="flex items-center gap-1">{t('sched.start_date')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
+                    <TableHead className="cursor-pointer select-none text-right" onClick={() => toggleSort('value')}>
+                      <span className="flex items-center justify-end gap-1">{t('contract.value')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
                     <TableHead className="text-right">{t('saas.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
