@@ -4,10 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LanguageToggle from './LanguageToggle';
 import ThemeToggle from './ThemeToggle';
-import { useLanguage } from '@/i18n/LanguageContext';
-import { Link, useLocation } from 'react-router-dom';
-import { cn } from '@/lib/utils';
-import LanguageToggle from './LanguageToggle';
 import {
   LayoutDashboard,
   Building2,
