@@ -64,7 +64,11 @@ const App = () => (
                   </ProtectedRoute>
                 } />
                 <Route path="/contracts" element={<Dashboard />} />
-                <Route path="/my-schedule" element={<Dashboard />} />
+                <Route path="/my-schedule" element={
+                  <ProtectedRoute roles={['client_employee']}>
+                    <MySchedulePage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/settings" element={<Dashboard />} />
               </Route>
 
