@@ -253,8 +253,8 @@ const Dashboard = () => {
                 return (
                   <div key={c.id} className="flex items-center justify-between rounded-lg border border-border/50 p-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10">
-                        <FileText className="h-4 w-4 text-amber-500" />
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning/10">
+                        <FileText className="h-4 w-4 text-warning" />
                       </div>
                       <div>
                         <p className="text-sm font-medium">{c.title}</p>
