@@ -46,7 +46,11 @@ const App = () => (
                 } />
                 <Route path="/employee-dashboard" element={<Dashboard />} />
                 <Route path="/team" element={<Dashboard />} />
-                <Route path="/invitations" element={<Dashboard />} />
+                <Route path="/invitations" element={
+                  <ProtectedRoute roles={['client_admin']}>
+                    <InvitationsPage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/schedules" element={<Dashboard />} />
                 <Route path="/contracts" element={<Dashboard />} />
                 <Route path="/my-schedule" element={<Dashboard />} />
