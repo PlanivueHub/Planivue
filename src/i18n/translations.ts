@@ -62,6 +62,16 @@ export const translations = {
   'dashboard.welcome': { fr: 'Bienvenue', en: 'Welcome' },
   'dashboard.title': { fr: 'Tableau de bord', en: 'Dashboard' },
   'dashboard.overview': { fr: 'Vue d\'ensemble', en: 'Overview' },
+  'dashboard.total_value': { fr: 'Valeur totale', en: 'Total Value' },
+  'dashboard.active_contracts': { fr: 'Contrats actifs', en: 'Active Contracts' },
+  'dashboard.expiring_soon': { fr: 'Expirent bientôt', en: 'Expiring Soon' },
+  'dashboard.shifts_label': { fr: 'Quarts', en: 'Shifts' },
+  'dashboard.values_over_time': { fr: 'Valeurs des contrats dans le temps', en: 'Contract Values Over Time' },
+  'dashboard.status_distribution': { fr: 'Répartition par statut', en: 'Status Distribution' },
+  'dashboard.expiring_alerts': { fr: 'Alertes d\'expiration', en: 'Expiration Alerts' },
+  'dashboard.expires_on': { fr: 'Expire le', en: 'Expires on' },
+  'dashboard.no_expiring': { fr: 'Aucun contrat expirant bientôt', en: 'No contracts expiring soon' },
+  'dashboard.days_left': { fr: 'jours restants', en: 'days left' },
 
   // Common
   'common.loading': { fr: 'Chargement...', en: 'Loading...' },
