@@ -52,8 +52,10 @@ const SaasOwnerDashboard = () => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (isSaasOwner) fetchData();
+  }, [isSaasOwner]);
+
+  if (!isSaasOwner) return <Navigate to="/dashboard" replace />;
 
   const toggleTenantStatus = async (tenantId: string, currentStatus: string) => {
     const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
