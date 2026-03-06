@@ -46,6 +46,13 @@ export const translations = {
   'saas.active': { fr: 'Actif', en: 'Active' },
   'saas.suspended': { fr: 'Suspendu', en: 'Suspended' },
   'saas.no_tenants': { fr: 'Aucune organisation trouvée', en: 'No tenants found' },
+  'saas.super_admin': { fr: 'Super Administrateur', en: 'Super Admin' },
+  'saas.last_activity': { fr: 'Dernière activité', en: 'Last Activity' },
+  'saas.metric_tenants_desc': { fr: 'Organisations enregistrées', en: 'Registered organizations' },
+  'saas.metric_active_desc': { fr: 'Actuellement actives', en: 'Currently active' },
+  'saas.metric_users_desc': { fr: 'Comptes sur la plateforme', en: 'Accounts on the platform' },
+  'saas.metric_roles_desc': { fr: 'Attributions de rôles', en: 'Role assignments' },
+  'saas.tenants_table_desc': { fr: 'Gérez toutes les organisations de la plateforme', en: 'Manage all platform organizations' },
 
   // Dashboard
   'dashboard.welcome': { fr: 'Bienvenue', en: 'Welcome' },
