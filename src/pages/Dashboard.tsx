@@ -26,6 +26,7 @@ const CHART_COLORS = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { profile, highestRole } = useAuth();
   const { t, language } = useLanguage();
   const role = highestRole();
