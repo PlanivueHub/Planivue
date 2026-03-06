@@ -49,7 +49,7 @@ const Dashboard = () => {
     { icon: FileText, label: t('nav.contracts'), value: counts?.contracts },
     { icon: Users, label: t('nav.team'), value: counts?.team },
     { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules },
-    { icon: CalendarDays, label: t('dashboard.shifts') ?? 'Shifts', value: counts?.shifts },
+    { icon: Building2, label: language === 'fr' ? 'Quarts' : 'Shifts', value: counts?.shifts },
   ];
 
   return (
