@@ -18,9 +18,7 @@ const SaasOwnerDashboard = () => {
   const [tenants, setTenants] = useState<(Tenant & { user_count?: number })[]>([]);
   const [metrics, setMetrics] = useState<PlatformMetrics | null>(null);
   const [loading, setLoading] = useState(true);
-
-  if (!hasRole('saas_owner')) return <Navigate to="/dashboard" replace />;
-
+  const isSaasOwner = hasRole('saas_owner');
   const dateLocale = language === 'fr' ? fr : enCA;
 
   const fetchData = async () => {
