@@ -14,7 +14,7 @@ interface DashboardCounts {
 
 const Dashboard = () => {
   const { profile, highestRole } = useAuth();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const role = highestRole();
   const [counts, setCounts] = useState<DashboardCounts | null>(null);
   const [loading, setLoading] = useState(true);
