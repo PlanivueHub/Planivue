@@ -123,6 +123,22 @@ const SaasOwnerDashboard = () => {
       gradient: 'from-muted-foreground/10 to-muted-foreground/5',
       iconColor: 'text-muted-foreground',
     },
+    {
+      icon: CalendarCheck,
+      label: t('saas.published_schedules'),
+      value: metrics?.published_schedules ?? '—',
+      description: t('saas.metric_schedules_desc'),
+      gradient: 'from-primary/10 to-primary/5',
+      iconColor: 'text-primary',
+    },
+    {
+      icon: Layers,
+      label: t('saas.total_shifts'),
+      value: metrics?.total_shifts ?? '—',
+      description: t('saas.metric_shifts_desc'),
+      gradient: 'from-success/10 to-success/5',
+      iconColor: 'text-success',
+    },
   ];
 
   return (
