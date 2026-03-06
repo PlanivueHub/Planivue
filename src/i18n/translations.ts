@@ -173,6 +173,32 @@ export const translations = {
   'shift.deleted': { fr: 'Quart supprimé', en: 'Shift deleted' },
   'shift.delete_title': { fr: 'Supprimer le quart', en: 'Delete Shift' },
   'shift.delete_confirm': { fr: 'Supprimer le quart de', en: 'Delete shift for' },
+
+  // Contracts
+  'contract.title': { fr: 'Gestion des contrats', en: 'Contract Management' },
+  'contract.subtitle': { fr: 'Créez et gérez vos contrats de service', en: 'Create and manage your service contracts' },
+  'contract.new': { fr: 'Nouveau contrat', en: 'New Contract' },
+  'contract.edit': { fr: 'Modifier le contrat', en: 'Edit Contract' },
+  'contract.contract_title': { fr: 'Titre', en: 'Title' },
+  'contract.title_placeholder': { fr: 'ex: Contrat de maintenance', en: 'e.g. Maintenance contract' },
+  'contract.client_name': { fr: 'Client', en: 'Client' },
+  'contract.client_placeholder': { fr: 'Nom du client', en: 'Client name' },
+  'contract.contract_status': { fr: 'Statut', en: 'Status' },
+  'contract.value': { fr: 'Valeur', en: 'Value' },
+  'contract.description': { fr: 'Description', en: 'Description' },
+  'contract.desc_placeholder': { fr: 'Détails du contrat...', en: 'Contract details...' },
+  'contract.optional': { fr: 'optionnel', en: 'optional' },
+  'contract.status_draft': { fr: 'Brouillon', en: 'Draft' },
+  'contract.status_active': { fr: 'Actif', en: 'Active' },
+  'contract.status_completed': { fr: 'Terminé', en: 'Completed' },
+  'contract.status_cancelled': { fr: 'Annulé', en: 'Cancelled' },
+  'contract.no_contracts': { fr: 'Aucun contrat trouvé', en: 'No contracts found' },
+  'contract.table_desc': { fr: 'Tous les contrats de votre organisation', en: 'All contracts for your organization' },
+  'contract.created': { fr: 'Contrat créé', en: 'Contract created' },
+  'contract.updated': { fr: 'Contrat mis à jour', en: 'Contract updated' },
+  'contract.deleted': { fr: 'Contrat supprimé', en: 'Contract deleted' },
+  'contract.delete_title': { fr: 'Supprimer le contrat', en: 'Delete Contract' },
+  'contract.delete_confirm': { fr: 'Voulez-vous vraiment supprimer', en: 'Are you sure you want to delete' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

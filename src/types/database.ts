@@ -61,6 +61,21 @@ export interface Shift {
   updated_at: string;
 }
 
+export interface Contract {
+  id: string;
+  tenant_id: string;
+  title: string;
+  client_name: string;
+  status: 'draft' | 'active' | 'completed' | 'cancelled';
+  start_date: string;
+  end_date: string | null;
+  value: number | null;
+  description: string | null;
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface PlatformMetrics {
   total_tenants: number;
   active_tenants: number;
