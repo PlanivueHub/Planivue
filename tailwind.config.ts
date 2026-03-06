@@ -60,6 +60,13 @@ export default {
           DEFAULT: "hsl(var(--warning))",
           foreground: "hsl(var(--warning-foreground))",
         },
+        chart: {
+          primary: "hsl(var(--chart-primary))",
+          overtime: "hsl(var(--chart-overtime))",
+          benefits: "hsl(var(--chart-benefits))",
+          profit: "hsl(var(--chart-profit))",
+          error: "hsl(var(--chart-error))",
+        },
         sidebar: {
           DEFAULT: "hsl(var(--sidebar-background))",
           foreground: "hsl(var(--sidebar-foreground))",
