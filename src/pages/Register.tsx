@@ -8,6 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserCheck, AlertCircle } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
+import ThemeToggle from '@/components/layout/ThemeToggle';
 
 const Register = () => {
   const { signUp, user, loading } = useAuth();
