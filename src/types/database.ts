@@ -42,4 +42,6 @@ export interface PlatformMetrics {
   active_tenants: number;
   total_users: number;
   total_roles: number;
+  published_schedules: number;
+  total_shifts: number;
 }

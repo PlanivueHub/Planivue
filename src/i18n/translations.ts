@@ -53,6 +53,10 @@ export const translations = {
   'saas.metric_users_desc': { fr: 'Comptes sur la plateforme', en: 'Accounts on the platform' },
   'saas.metric_roles_desc': { fr: 'Attributions de rôles', en: 'Role assignments' },
   'saas.tenants_table_desc': { fr: 'Gérez toutes les organisations de la plateforme', en: 'Manage all platform organizations' },
+  'saas.published_schedules': { fr: 'Horaires publiés', en: 'Published Schedules' },
+  'saas.total_shifts': { fr: 'Total Quarts', en: 'Total Shifts' },
+  'saas.metric_schedules_desc': { fr: 'Horaires actuellement publiés', en: 'Currently published schedules' },
+  'saas.metric_shifts_desc': { fr: 'Quarts de travail sur la plateforme', en: 'Shifts across the platform' },
 
   // Dashboard
   'dashboard.welcome': { fr: 'Bienvenue', en: 'Welcome' },
