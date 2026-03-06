@@ -3,6 +3,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LanguageToggle from './LanguageToggle';
+import ThemeToggle from './ThemeToggle';
 import {
   LayoutDashboard,
   Building2,
@@ -93,7 +94,10 @@ const AppSidebar = () => {
           <span className="truncate text-xs text-muted-foreground">
             {profile?.email ?? ''}
           </span>
-          <LanguageToggle />
+          <div className="flex items-center gap-1">
+            <ThemeToggle />
+            <LanguageToggle />
+          </div>
         </div>
         <Button
           variant="ghost"
