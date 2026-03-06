@@ -13,22 +13,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Plus, CalendarDays, CalendarIcon, Search, Send, Archive, Trash2, Edit } from 'lucide-react';
+import { Plus, CalendarDays, CalendarIcon, Search, Send, Archive, Trash2, Edit, ChevronDown, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import type { Schedule } from '@/types/database';
+import ShiftManager from '@/components/shifts/ShiftManager';
 
 const SchedulesPage = () => {
   const { hasRole, profile, user } = useAuth();
@@ -36,6 +30,7 @@ const SchedulesPage = () => {
   const [schedules, setSchedules] = useState<Schedule[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [expandedId, setExpandedId] = useState<string | null>(null);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editingSchedule, setEditingSchedule] = useState<Schedule | null>(null);
   const [title, setTitle] = useState('');
@@ -287,69 +282,91 @@ const SchedulesPage = () => {
                 <TableBody>
                   {filteredSchedules.map((schedule) => {
                     const cfg = statusConfig[schedule.status] ?? statusConfig.draft;
+                    const isExpanded = expandedId === schedule.id;
                     return (
-                      <TableRow key={schedule.id} className="group">
-                        <TableCell>
-                          <div className="flex items-center gap-2.5">
-                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
-                              <CalendarDays className="h-4 w-4 text-primary" />
+                      <>
+                        <TableRow
+                          key={schedule.id}
+                          className="group cursor-pointer"
+                          onClick={() => setExpandedId(isExpanded ? null : schedule.id)}
+                        >
+                          <TableCell>
+                            <div className="flex items-center gap-2.5">
+                              {isExpanded ? (
+                                <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground" />
+                              ) : (
+                                <ChevronRight className="h-4 w-4 shrink-0 text-muted-foreground" />
+                              )}
+                              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary/10">
+                                <CalendarDays className="h-4 w-4 text-primary" />
+                              </div>
+                              <span className="font-medium">{schedule.title}</span>
                             </div>
-                            <span className="font-medium">{schedule.title}</span>
-                          </div>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant={cfg.variant} className="text-xs">
-                            <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${cfg.dot}`} />
-                            {t(`sched.status_${schedule.status}` as any)}
-                          </Badge>
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {format(new Date(schedule.start_date), 'PPP', { locale: dateLocale })}
-                        </TableCell>
-                        <TableCell className="text-sm text-muted-foreground">
-                          {format(new Date(schedule.end_date), 'PPP', { locale: dateLocale })}
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <div className="flex items-center justify-end gap-1 opacity-70 transition-opacity group-hover:opacity-100">
-                            {schedule.status === 'draft' && (
-                              <>
-                                <Button variant="ghost" size="icon" onClick={() => openEdit(schedule)} title={t('common.edit')}>
-                                  <Edit className="h-4 w-4" />
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant={cfg.variant} className="text-xs">
+                              <span className={`mr-1.5 inline-block h-1.5 w-1.5 rounded-full ${cfg.dot}`} />
+                              {t(`sched.status_${schedule.status}` as any)}
+                            </Badge>
+                          </TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {format(new Date(schedule.start_date), 'PPP', { locale: dateLocale })}
+                          </TableCell>
+                          <TableCell className="text-sm text-muted-foreground">
+                            {format(new Date(schedule.end_date), 'PPP', { locale: dateLocale })}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <div
+                              className="flex items-center justify-end gap-1 opacity-70 transition-opacity group-hover:opacity-100"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {schedule.status === 'draft' && (
+                                <>
+                                  <Button variant="ghost" size="icon" onClick={() => openEdit(schedule)} title={t('common.edit')}>
+                                    <Edit className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="icon" onClick={() => updateStatus(schedule.id, 'published')} title={t('sched.publish')}>
+                                    <Send className="h-4 w-4 text-success" />
+                                  </Button>
+                                </>
+                              )}
+                              {schedule.status === 'published' && (
+                                <Button variant="ghost" size="icon" onClick={() => updateStatus(schedule.id, 'archived')} title={t('sched.archive')}>
+                                  <Archive className="h-4 w-4 text-muted-foreground" />
                                 </Button>
-                                <Button variant="ghost" size="icon" onClick={() => updateStatus(schedule.id, 'published')} title={t('sched.publish')}>
-                                  <Send className="h-4 w-4 text-success" />
-                                </Button>
-                              </>
-                            )}
-                            {schedule.status === 'published' && (
-                              <Button variant="ghost" size="icon" onClick={() => updateStatus(schedule.id, 'archived')} title={t('sched.archive')}>
-                                <Archive className="h-4 w-4 text-muted-foreground" />
-                              </Button>
-                            )}
-                            <AlertDialog>
-                              <AlertDialogTrigger asChild>
-                                <Button variant="ghost" size="icon" className="hover:text-destructive" title={t('common.delete')}>
-                                  <Trash2 className="h-4 w-4" />
-                                </Button>
-                              </AlertDialogTrigger>
-                              <AlertDialogContent>
-                                <AlertDialogHeader>
-                                  <AlertDialogTitle>{t('sched.delete_title')}</AlertDialogTitle>
-                                  <AlertDialogDescription>
-                                    {t('sched.delete_confirm')} <strong>{schedule.title}</strong>?
-                                  </AlertDialogDescription>
-                                </AlertDialogHeader>
-                                <AlertDialogFooter>
-                                  <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
-                                  <AlertDialogAction onClick={() => deleteSchedule(schedule.id)}>
-                                    {t('common.delete')}
-                                  </AlertDialogAction>
-                                </AlertDialogFooter>
-                              </AlertDialogContent>
-                            </AlertDialog>
-                          </div>
-                        </TableCell>
-                      </TableRow>
+                              )}
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="hover:text-destructive" title={t('common.delete')}>
+                                    <Trash2 className="h-4 w-4" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>{t('sched.delete_title')}</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      {t('sched.delete_confirm')} <strong>{schedule.title}</strong>?
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => deleteSchedule(schedule.id)}>
+                                      {t('common.delete')}
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                        {isExpanded && profile?.tenant_id && (
+                          <TableRow key={`${schedule.id}-shifts`}>
+                            <TableCell colSpan={5} className="bg-muted/30 p-6">
+                              <ShiftManager scheduleId={schedule.id} tenantId={profile.tenant_id} />
+                            </TableCell>
+                          </TableRow>
+                        )}
+                      </>
                     );
                   })}
                 </TableBody>

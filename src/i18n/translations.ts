@@ -156,6 +156,23 @@ export const translations = {
   'mysched.past': { fr: 'Passés', en: 'Past' },
   'mysched.today': { fr: "Aujourd'hui", en: 'Today' },
   'mysched.tomorrow': { fr: 'Demain', en: 'Tomorrow' },
+
+  // Shifts
+  'shift.title': { fr: 'Quarts de travail', en: 'Shifts' },
+  'shift.new': { fr: 'Nouveau quart', en: 'New Shift' },
+  'shift.employee': { fr: 'Employé', en: 'Employee' },
+  'shift.select_employee': { fr: 'Sélectionner un employé', en: 'Select an employee' },
+  'shift.date': { fr: 'Date', en: 'Date' },
+  'shift.start_time': { fr: 'Début', en: 'Start' },
+  'shift.end_time': { fr: 'Fin', en: 'End' },
+  'shift.notes': { fr: 'Notes', en: 'Notes' },
+  'shift.notes_placeholder': { fr: 'Notes optionnelles...', en: 'Optional notes...' },
+  'shift.add': { fr: 'Ajouter le quart', en: 'Add Shift' },
+  'shift.no_shifts': { fr: 'Aucun quart assigné', en: 'No shifts assigned' },
+  'shift.created': { fr: 'Quart créé', en: 'Shift created' },
+  'shift.deleted': { fr: 'Quart supprimé', en: 'Shift deleted' },
+  'shift.delete_title': { fr: 'Supprimer le quart', en: 'Delete Shift' },
+  'shift.delete_confirm': { fr: 'Supprimer le quart de', en: 'Delete shift for' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
