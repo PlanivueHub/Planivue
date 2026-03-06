@@ -336,11 +336,19 @@ const ContractsPage = () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>{t('contract.contract_title')}</TableHead>
-                    <TableHead>{t('contract.client_name')}</TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('title')}>
+                      <span className="flex items-center gap-1">{t('contract.contract_title')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('client_name')}>
+                      <span className="flex items-center gap-1">{t('contract.client_name')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
                     <TableHead>{t('saas.status')}</TableHead>
-                    <TableHead>{t('sched.start_date')}</TableHead>
-                    <TableHead className="text-right">{t('contract.value')}</TableHead>
+                    <TableHead className="cursor-pointer select-none" onClick={() => toggleSort('start_date')}>
+                      <span className="flex items-center gap-1">{t('sched.start_date')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
+                    <TableHead className="cursor-pointer select-none text-right" onClick={() => toggleSort('value')}>
+                      <span className="flex items-center justify-end gap-1">{t('contract.value')} <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></span>
+                    </TableHead>
                     <TableHead className="text-right">{t('saas.actions')}</TableHead>
                   </TableRow>
                 </TableHeader>
