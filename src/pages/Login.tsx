@@ -65,11 +65,11 @@ const Login = () => {
           <LanguageToggle />
         </div>
 
-        <Card className="w-full max-w-md border-border/50 shadow-lg">
-          <CardHeader className="space-y-1 text-center">
-            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary lg:hidden">
-              <UserCheck className="h-6 w-6 text-primary-foreground" />
-            </div>
+         <Card className="w-full max-w-md border-border/50 shadow-lg">
+           <CardHeader className="space-y-1 text-center">
+             <div className="mx-auto mb-2 lg:hidden">
+               <img src={planivueLogo} alt="PlanivueHub" className="mx-auto h-16 w-16 object-contain" />
+             </div>
             <CardTitle className="font-display text-2xl">{t('auth.login')}</CardTitle>
             <CardDescription>{t('auth.login_subtitle')}</CardDescription>
           </CardHeader>
