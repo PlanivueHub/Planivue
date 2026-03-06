@@ -61,7 +61,8 @@ const Login = () => {
 
       {/* Right panel - form */}
       <div className="flex flex-1 flex-col items-center justify-center px-6">
-        <div className="absolute right-6 top-6">
+        <div className="absolute right-6 top-6 flex items-center gap-1">
+          <ThemeToggle />
           <LanguageToggle />
         </div>
 
