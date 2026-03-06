@@ -286,14 +286,38 @@ const ContractsPage = () => {
 
       {/* Table */}
       <Card className="border-border/50">
-        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <CardTitle className="font-display text-lg">{t('nav.contracts')}</CardTitle>
-            <CardDescription>{t('contract.table_desc')}</CardDescription>
+        <CardHeader className="flex flex-col gap-4">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <CardTitle className="font-display text-lg">{t('nav.contracts')}</CardTitle>
+              <CardDescription>{t('contract.table_desc')}</CardDescription>
+            </div>
+            <div className="relative w-full sm:w-64">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+            </div>
           </div>
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-            <Input placeholder={t('common.search')} value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
+          <div className="flex flex-wrap items-center gap-2">
+            <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as ContractStatus | 'all')}>
+              <SelectTrigger className="w-[160px]">
+                <SelectValue placeholder={t('contract.contract_status')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">{t('contract.filter_all_statuses')}</SelectItem>
+                {statusOptions.map((s) => (
+                  <SelectItem key={s.value} value={s.value}>{s.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            {hasActiveFilters && (
+              <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1 text-xs text-muted-foreground">
+                <X className="h-3 w-3" />
+                {t('contract.clear_filters')}
+              </Button>
+            )}
+            <span className="ml-auto text-xs text-muted-foreground">
+              {filtered.length} / {contracts.length}
+            </span>
           </div>
         </CardHeader>
         <CardContent>
