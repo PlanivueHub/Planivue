@@ -12,6 +12,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import SaasOwnerDashboard from "./pages/SaasOwnerDashboard";
+import EmployeeDashboard from "./pages/EmployeeDashboard";
 import InvitationsPage from "./pages/InvitationsPage";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import TeamPage from "./pages/TeamPage";
@@ -49,7 +50,11 @@ const App = () => (
                     <SaasOwnerDashboard />
                   </ProtectedRoute>
                 } />
-                <Route path="/employee-dashboard" element={<Dashboard />} />
+                <Route path="/employee-dashboard" element={
+                  <ProtectedRoute roles={['client_employee']}>
+                    <EmployeeDashboard />
+                  </ProtectedRoute>
+                } />
                 <Route path="/team" element={
                   <ProtectedRoute roles={['client_admin']}>
                     <TeamPage />
