@@ -18,6 +18,7 @@ import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
 import MySchedulePage from "./pages/MySchedulePage";
 import ContractsPage from "./pages/ContractsPage";
+import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -74,7 +75,7 @@ const App = () => (
                     <MySchedulePage />
                   </ProtectedRoute>
                 } />
-                <Route path="/settings" element={<Dashboard />} />
+                <Route path="/settings" element={<SettingsPage />} />
               </Route>
 
               {/* Root redirect */}
