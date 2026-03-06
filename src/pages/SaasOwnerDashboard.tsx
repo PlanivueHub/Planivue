@@ -158,7 +158,7 @@ const SaasOwnerDashboard = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {metricCards.map((card) => (
           <Card key={card.label} className="overflow-hidden border-border/50 transition-shadow hover:shadow-md">
             <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
