@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
@@ -25,6 +26,7 @@ const CHART_COLORS = [
 ];
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { profile, highestRole } = useAuth();
   const { t, language } = useLanguage();
   const role = highestRole();
@@ -101,12 +103,12 @@ const Dashboard = () => {
     }).format(v);
 
   const summaryCards = [
-    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-emerald-500' },
-    { icon: FileText, label: t('dashboard.active_contracts'), value: activeContracts.length, color: 'text-primary' },
-    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-amber-500' },
-    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-blue-500' },
-    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-violet-500' },
-    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-rose-500' },
+    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-emerald-500', onClick: () => navigate('/contracts') },
+    { icon: FileText, label: t('dashboard.active_contracts'), value: activeContracts.length, color: 'text-primary', onClick: () => navigate('/contracts') },
+    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-amber-500', onClick: () => navigate('/contracts') },
+    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-blue-500', onClick: () => navigate('/team') },
+    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-violet-500', onClick: () => navigate('/schedules') },
+    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-rose-500', onClick: () => navigate('/schedules') },
   ];
 
   return (
@@ -124,7 +126,7 @@ const Dashboard = () => {
       {/* Summary cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
         {summaryCards.map((card) => (
-          <Card key={card.label} className="border-border/50">
+          <Card key={card.label} className="border-border/50 cursor-pointer transition-all hover:shadow-md hover:border-primary/50" onClick={card.onClick}>
             <CardHeader className="flex flex-row items-center justify-between pb-2">
               <CardTitle className="text-xs font-medium text-muted-foreground">{card.label}</CardTitle>
               <card.icon className={`h-4 w-4 ${card.color}`} />
