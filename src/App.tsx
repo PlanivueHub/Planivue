@@ -75,7 +75,7 @@ const App = () => (
                     <MySchedulePage />
                   </ProtectedRoute>
                 } />
-                <Route path="/settings" element={<Dashboard />} />
+                <Route path="/settings" element={<SettingsPage />} />
               </Route>
 
               {/* Root redirect */}
