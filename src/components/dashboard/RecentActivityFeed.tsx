@@ -29,14 +29,14 @@ const ICON_MAP = {
 
 const COLOR_MAP = {
   contract: 'text-primary',
-  schedule: 'text-violet-500',
-  team: 'text-blue-500',
+  schedule: 'text-chart-benefits',
+  team: 'text-chart-primary',
 };
 
 const BG_MAP = {
   contract: 'bg-primary/10',
-  schedule: 'bg-violet-500/10',
-  team: 'bg-blue-500/10',
+  schedule: 'bg-chart-benefits/10',
+  team: 'bg-chart-primary/10',
 };
 
 const RecentActivityFeed = ({ tenantId }: RecentActivityFeedProps) => {

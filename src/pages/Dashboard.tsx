@@ -20,10 +20,11 @@ interface DashboardCounts {
 }
 
 const CHART_COLORS = [
-  'hsl(var(--primary))',
-  'hsl(var(--accent))',
-  'hsl(var(--muted-foreground))',
-  'hsl(var(--destructive))',
+  'hsl(var(--chart-primary))',
+  'hsl(var(--chart-overtime))',
+  'hsl(var(--chart-benefits))',
+  'hsl(var(--chart-profit))',
+  'hsl(var(--chart-error))',
 ];
 
 const Dashboard = () => {
@@ -104,12 +105,12 @@ const Dashboard = () => {
     }).format(v);
 
   const summaryCards = [
-    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-emerald-500', onClick: () => navigate('/contracts') },
+    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-success', onClick: () => navigate('/contracts') },
     { icon: FileText, label: t('dashboard.active_contracts'), value: activeContracts.length, color: 'text-primary', onClick: () => navigate('/contracts') },
-    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-amber-500', onClick: () => navigate('/contracts') },
-    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-blue-500', onClick: () => navigate('/team') },
-    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-violet-500', onClick: () => navigate('/schedules') },
-    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-rose-500', onClick: () => navigate('/schedules') },
+    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-warning', onClick: () => navigate('/contracts') },
+    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-primary', onClick: () => navigate('/team') },
+    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-chart-benefits', onClick: () => navigate('/schedules') },
+    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-destructive', onClick: () => navigate('/schedules') },
   ];
 
   return (
@@ -167,7 +168,7 @@ const Dashboard = () => {
                       color: 'hsl(var(--foreground))',
                     }}
                   />
-                  <Bar dataKey="total" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                  <Bar dataKey="total" fill="hsl(var(--chart-primary))" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -237,7 +238,7 @@ const Dashboard = () => {
       <Card className="border-border/50">
         <CardHeader>
           <CardTitle className="font-display text-base flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-500" />
+            <AlertTriangle className="h-4 w-4 text-warning" />
             {t('dashboard.expiring_alerts')}
           </CardTitle>
           <CardDescription>{t('dashboard.expiring_soon')} (30 {t('dashboard.days_left')})</CardDescription>
@@ -252,8 +253,8 @@ const Dashboard = () => {
                 return (
                   <div key={c.id} className="flex items-center justify-between rounded-lg border border-border/50 p-3">
                     <div className="flex items-center gap-3">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-amber-500/10">
-                        <FileText className="h-4 w-4 text-amber-500" />
+                      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-warning/10">
+                        <FileText className="h-4 w-4 text-warning" />
                       </div>
                       <div>
                         <p className="text-sm font-medium">{c.title}</p>
