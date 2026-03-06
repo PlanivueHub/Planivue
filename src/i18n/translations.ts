@@ -99,6 +99,18 @@ export const translations = {
   'inv.accept_btn': { fr: 'Créer mon compte', en: 'Create my account' },
   'inv.invalid_token': { fr: 'Ce lien d\'invitation est invalide ou expiré', en: 'This invitation link is invalid or expired' },
   'inv.already_accepted': { fr: 'Cette invitation a déjà été acceptée', en: 'This invitation has already been accepted' },
+
+  // Team
+  'team.title': { fr: 'Gestion de l\'équipe', en: 'Team Management' },
+  'team.subtitle': { fr: 'Gérez les membres de votre organisation', en: 'Manage your organization members' },
+  'team.members': { fr: 'Membres', en: 'Members' },
+  'team.no_members': { fr: 'Aucun membre trouvé', en: 'No members found' },
+  'team.joined': { fr: 'Inscrit le', en: 'Joined' },
+  'team.role_updated': { fr: 'Rôle mis à jour', en: 'Role updated' },
+  'team.member_removed': { fr: 'Membre retiré', en: 'Member removed' },
+  'team.cannot_change_own': { fr: 'Vous ne pouvez pas modifier votre propre rôle', en: 'You cannot change your own role' },
+  'team.remove_title': { fr: 'Retirer le membre', en: 'Remove Member' },
+  'team.remove_confirm': { fr: 'Voulez-vous vraiment retirer', en: 'Are you sure you want to remove' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
