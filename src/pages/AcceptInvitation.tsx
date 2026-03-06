@@ -83,22 +83,16 @@ const AcceptInvitation = () => {
 
       const userId = authData.user.id;
 
-      // Update profile with tenant
-      await supabase
-        .from('profiles')
-        .update({ tenant_id: invitation.tenant_id, full_name: fullName })
-        .eq('id', userId);
+      // Use security definer function to atomically accept invitation
+      const { error: rpcError } = await supabase.rpc('accept_invitation', {
+        _user_id: userId,
+        _invitation_id: invitation.id,
+        _tenant_id: invitation.tenant_id,
+        _role: invitation.role,
+        _full_name: fullName,
+      });
 
-      // Assign role
-      await supabase
-        .from('user_roles')
-        .insert({ user_id: userId, tenant_id: invitation.tenant_id, role: invitation.role });
-
-      // Mark invitation as accepted
-      await supabase
-        .from('invitations')
-        .update({ accepted_at: new Date().toISOString() })
-        .eq('id', invitation.id);
+      if (rpcError) { setError(rpcError.message); setSubmitting(false); return; }
 
       setStatus('done');
     } catch (err) {
