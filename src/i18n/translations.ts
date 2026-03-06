@@ -122,6 +122,31 @@ export const translations = {
   'team.cannot_change_own': { fr: 'Vous ne pouvez pas modifier votre propre rôle', en: 'You cannot change your own role' },
   'team.remove_title': { fr: 'Retirer le membre', en: 'Remove Member' },
   'team.remove_confirm': { fr: 'Voulez-vous vraiment retirer', en: 'Are you sure you want to remove' },
+
+  // Schedules
+  'sched.title': { fr: 'Gestion des horaires', en: 'Schedule Management' },
+  'sched.subtitle': { fr: 'Créez et gérez les horaires de votre organisation', en: 'Create and manage your organization schedules' },
+  'sched.new': { fr: 'Nouvel horaire', en: 'New Schedule' },
+  'sched.edit': { fr: 'Modifier l\'horaire', en: 'Edit Schedule' },
+  'sched.schedule_title': { fr: 'Titre', en: 'Title' },
+  'sched.title_placeholder': { fr: 'ex: Semaine du 10 mars', en: 'e.g. Week of March 10' },
+  'sched.start_date': { fr: 'Date de début', en: 'Start Date' },
+  'sched.end_date': { fr: 'Date de fin', en: 'End Date' },
+  'sched.pick_date': { fr: 'Choisir une date', en: 'Pick a date' },
+  'sched.status_draft': { fr: 'Brouillon', en: 'Draft' },
+  'sched.status_published': { fr: 'Publié', en: 'Published' },
+  'sched.status_archived': { fr: 'Archivé', en: 'Archived' },
+  'sched.publish': { fr: 'Publier', en: 'Publish' },
+  'sched.archive': { fr: 'Archiver', en: 'Archive' },
+  'sched.no_schedules': { fr: 'Aucun horaire trouvé', en: 'No schedules found' },
+  'sched.table_desc': { fr: 'Tous les horaires de votre organisation', en: 'All schedules for your organization' },
+  'sched.created': { fr: 'Horaire créé', en: 'Schedule created' },
+  'sched.updated': { fr: 'Horaire mis à jour', en: 'Schedule updated' },
+  'sched.published': { fr: 'Horaire publié', en: 'Schedule published' },
+  'sched.archived': { fr: 'Horaire archivé', en: 'Schedule archived' },
+  'sched.deleted': { fr: 'Horaire supprimé', en: 'Schedule deleted' },
+  'sched.delete_title': { fr: 'Supprimer l\'horaire', en: 'Delete Schedule' },
+  'sched.delete_confirm': { fr: 'Voulez-vous vraiment supprimer', en: 'Are you sure you want to delete' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
