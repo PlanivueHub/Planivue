@@ -57,7 +57,11 @@ const App = () => (
                     <InvitationsPage />
                   </ProtectedRoute>
                 } />
-                <Route path="/schedules" element={<Dashboard />} />
+                <Route path="/schedules" element={
+                  <ProtectedRoute roles={['client_admin', 'client_manager']}>
+                    <SchedulesPage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/contracts" element={<Dashboard />} />
                 <Route path="/my-schedule" element={<Dashboard />} />
                 <Route path="/settings" element={<Dashboard />} />

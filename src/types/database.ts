@@ -37,6 +37,30 @@ export interface Invitation {
   created_at: string;
 }
 
+export interface Schedule {
+  id: string;
+  tenant_id: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  status: 'draft' | 'published' | 'archived';
+  created_by: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Shift {
+  id: string;
+  tenant_id: string;
+  schedule_id: string;
+  user_id: string;
+  start_time: string;
+  end_time: string;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
 export interface PlatformMetrics {
   total_tenants: number;
   active_tenants: number;
