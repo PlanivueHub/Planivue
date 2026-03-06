@@ -16,6 +16,7 @@ import InvitationsPage from "./pages/InvitationsPage";
 import AcceptInvitation from "./pages/AcceptInvitation";
 import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
+import MySchedulePage from "./pages/MySchedulePage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
