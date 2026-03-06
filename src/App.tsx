@@ -12,6 +12,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import SaasOwnerDashboard from "./pages/SaasOwnerDashboard";
+import InvitationsPage from "./pages/InvitationsPage";
+import AcceptInvitation from "./pages/AcceptInvitation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,6 +30,7 @@ const App = () => (
               {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/invite/:token" element={<AcceptInvitation />} />
 
               {/* Authenticated routes with layout */}
               <Route element={
@@ -43,7 +46,11 @@ const App = () => (
                 } />
                 <Route path="/employee-dashboard" element={<Dashboard />} />
                 <Route path="/team" element={<Dashboard />} />
-                <Route path="/invitations" element={<Dashboard />} />
+                <Route path="/invitations" element={
+                  <ProtectedRoute roles={['client_admin']}>
+                    <InvitationsPage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/schedules" element={<Dashboard />} />
                 <Route path="/contracts" element={<Dashboard />} />
                 <Route path="/my-schedule" element={<Dashboard />} />
