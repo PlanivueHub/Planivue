@@ -103,12 +103,12 @@ const Dashboard = () => {
     }).format(v);
 
   const summaryCards = [
-    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-emerald-500' },
-    { icon: FileText, label: t('dashboard.active_contracts'), value: activeContracts.length, color: 'text-primary' },
-    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-amber-500' },
-    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-blue-500' },
-    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-violet-500' },
-    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-rose-500' },
+    { icon: DollarSign, label: t('dashboard.total_value'), value: formatCurrency(totalValue), color: 'text-emerald-500', onClick: () => navigate('/contracts') },
+    { icon: FileText, label: t('dashboard.active_contracts'), value: activeContracts.length, color: 'text-primary', onClick: () => navigate('/contracts') },
+    { icon: AlertTriangle, label: t('dashboard.expiring_soon'), value: expiringSoon.length, color: 'text-amber-500', onClick: () => navigate('/contracts') },
+    { icon: Users, label: t('nav.team'), value: counts?.team ?? 0, color: 'text-blue-500', onClick: () => navigate('/team') },
+    { icon: CalendarDays, label: t('nav.schedules'), value: counts?.schedules ?? 0, color: 'text-violet-500', onClick: () => navigate('/schedules') },
+    { icon: TrendingUp, label: t('dashboard.shifts_label'), value: counts?.shifts ?? 0, color: 'text-rose-500', onClick: () => navigate('/schedules') },
   ];
 
   return (
