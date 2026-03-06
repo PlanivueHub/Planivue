@@ -20,10 +20,11 @@ interface DashboardCounts {
 }
 
 const CHART_COLORS = [
-  'hsl(var(--primary))',
-  'hsl(var(--accent))',
-  'hsl(var(--muted-foreground))',
-  'hsl(var(--destructive))',
+  'hsl(var(--chart-primary))',
+  'hsl(var(--chart-overtime))',
+  'hsl(var(--chart-benefits))',
+  'hsl(var(--chart-profit))',
+  'hsl(var(--chart-error))',
 ];
 
 const Dashboard = () => {
