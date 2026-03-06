@@ -9,8 +9,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { UserCheck, AlertCircle } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import ThemeToggle from '@/components/layout/ThemeToggle';
-import { UserCheck, AlertCircle } from 'lucide-react';
-import LanguageToggle from '@/components/layout/LanguageToggle';
 
 const Login = () => {
   const { signIn, user, loading } = useAuth();
