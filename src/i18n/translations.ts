@@ -99,9 +99,9 @@ export const translations = {
   'role.client_manager': { fr: 'Gestionnaire', en: 'Manager' },
   'role.client_employee': { fr: 'Employé', en: 'Employee' },
 
-  // App
-  'app.name': { fr: 'PlanifyHub', en: 'PlanifyHub' },
-  'app.tagline': { fr: 'Intelligence de planification', en: 'Planning Intelligence' },
+   // App
+   'app.name': { fr: 'PlanivueHub', en: 'PlanivueHub' },
+   'app.tagline': { fr: 'Intelligence de planification', en: 'Planning Intelligence' },
 
   // Invitations
   'inv.title': { fr: 'Gestion des invitations', en: 'Invitation Management' },
