@@ -87,6 +87,17 @@ export const translations = {
   'dashboard.benefits': { fr: 'Avantages sociaux', en: 'Benefits' },
   'dashboard.profit': { fr: 'Profit', en: 'Profit' },
 
+  // Employee dashboard
+  'emp.total_hours': { fr: 'Heures totales', en: 'Total Hours' },
+  'emp.regular_hours': { fr: 'Heures régulières', en: 'Regular Hours' },
+  'emp.overtime_hours': { fr: 'Heures supp.', en: 'Overtime' },
+  'emp.days_worked': { fr: 'Jours travaillés', en: 'Days Worked' },
+  'emp.weekly_hours': { fr: 'Heures de la semaine', en: 'Weekly Hours Overview' },
+  'emp.this_week': { fr: 'Cette semaine', en: 'This week' },
+  'emp.standard_day': { fr: 'Journée standard', en: 'Standard day' },
+  'emp.title': { fr: 'Mon tableau de bord', en: 'My Dashboard' },
+  'emp.subtitle': { fr: 'Aperçu de vos heures et quarts de travail', en: 'Overview of your hours and shifts' },
+
   // Common
   'common.loading': { fr: 'Chargement...', en: 'Loading...' },
   'common.error': { fr: 'Erreur', en: 'Error' },
