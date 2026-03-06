@@ -151,6 +151,10 @@ const Register = () => {
                     {t('auth.login')}
                   </Link>
                 </p>
+
+                <p className="text-center text-xs text-muted-foreground/70">
+                  {t('auth.employee_notice')}
+                </p>
               </form>
             </CardContent>
           </Card>

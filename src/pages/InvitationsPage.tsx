@@ -54,6 +54,8 @@ const InvitationsPage = () => {
     if (!profile?.tenant_id || !user) return;
     setSubmitting(true);
 
+    const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+
     const { error } = await supabase
       .from('invitations')
       .insert({
@@ -61,6 +63,7 @@ const InvitationsPage = () => {
         email,
         role,
         invited_by: user.id,
+        expires_at: expiresAt,
       });
 
     if (error) {
