@@ -44,9 +44,7 @@ const Login = () => {
       {/* Left panel - branding */}
       <div className="hidden w-1/2 flex-col justify-between bg-primary/5 p-12 lg:flex">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-            <UserCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
+          <img src={planivueLogo} alt="PlanivueHub" className="h-12 w-12 object-contain" />
           <span className="font-display text-xl font-bold">{t('app.name')}</span>
         </div>
         <div>
