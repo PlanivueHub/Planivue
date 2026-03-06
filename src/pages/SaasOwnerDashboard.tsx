@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Building2, Users, Shield, Activity, Search, TrendingUp, CalendarDays, Clock } from 'lucide-react';
+import { Building2, Users, Shield, Activity, Search, TrendingUp, CalendarDays, Clock, CalendarCheck, Layers } from 'lucide-react';
 import type { Tenant, PlatformMetrics } from '@/types/database';
 import { Navigate } from 'react-router-dom';
 import { format, formatDistanceToNow } from 'date-fns';
@@ -123,6 +123,22 @@ const SaasOwnerDashboard = () => {
       gradient: 'from-muted-foreground/10 to-muted-foreground/5',
       iconColor: 'text-muted-foreground',
     },
+    {
+      icon: CalendarCheck,
+      label: t('saas.published_schedules'),
+      value: metrics?.published_schedules ?? '—',
+      description: t('saas.metric_schedules_desc'),
+      gradient: 'from-primary/10 to-primary/5',
+      iconColor: 'text-primary',
+    },
+    {
+      icon: Layers,
+      label: t('saas.total_shifts'),
+      value: metrics?.total_shifts ?? '—',
+      description: t('saas.metric_shifts_desc'),
+      gradient: 'from-success/10 to-success/5',
+      iconColor: 'text-success',
+    },
   ];
 
   return (
@@ -142,7 +158,7 @@ const SaasOwnerDashboard = () => {
       </div>
 
       {/* Metric Cards */}
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {metricCards.map((card) => (
           <Card key={card.label} className="overflow-hidden border-border/50 transition-shadow hover:shadow-md">
             <div className={`absolute inset-0 bg-gradient-to-br ${card.gradient} pointer-events-none`} />
