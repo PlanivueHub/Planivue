@@ -50,7 +50,11 @@ const App = () => (
                     <SaasOwnerDashboard />
                   </ProtectedRoute>
                 } />
-                <Route path="/employee-dashboard" element={<Dashboard />} />
+                <Route path="/employee-dashboard" element={
+                  <ProtectedRoute roles={['client_employee']}>
+                    <EmployeeDashboard />
+                  </ProtectedRoute>
+                } />
                 <Route path="/team" element={
                   <ProtectedRoute roles={['client_admin']}>
                     <TeamPage />
