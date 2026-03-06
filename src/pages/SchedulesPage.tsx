@@ -13,22 +13,16 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent,
+  AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
-import { Plus, CalendarDays, CalendarIcon, Search, Send, Archive, Trash2, Edit } from 'lucide-react';
+import { Plus, CalendarDays, CalendarIcon, Search, Send, Archive, Trash2, Edit, ChevronDown, ChevronRight } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
 import type { Schedule } from '@/types/database';
+import ShiftManager from '@/components/shifts/ShiftManager';
 
 const SchedulesPage = () => {
   const { hasRole, profile, user } = useAuth();
