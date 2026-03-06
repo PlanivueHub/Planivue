@@ -30,6 +30,7 @@ const App = () => (
               {/* Public routes */}
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/invite/:token" element={<AcceptInvitation />} />
 
               {/* Authenticated routes with layout */}
               <Route element={
