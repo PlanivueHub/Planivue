@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LanguageToggle from './LanguageToggle';
 import ThemeToggle from './ThemeToggle';
+import planivueLogo from '@/assets/planivue-logo.png';
 import {
   LayoutDashboard,
   Building2,
@@ -11,7 +12,6 @@ import {
   CalendarDays,
   Settings,
   Mail,
-  UserCheck,
   FileText,
   LogOut,
 } from 'lucide-react';
