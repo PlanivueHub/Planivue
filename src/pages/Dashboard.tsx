@@ -230,6 +230,9 @@ const Dashboard = () => {
         </Card>
       </div>
 
+      {/* Recent Activity Feed */}
+      {profile?.tenant_id && <RecentActivityFeed tenantId={profile.tenant_id} />}
+
       {/* Expiring soon alerts */}
       <Card className="border-border/50">
         <CardHeader>

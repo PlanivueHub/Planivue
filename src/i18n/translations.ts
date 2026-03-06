@@ -72,6 +72,13 @@ export const translations = {
   'dashboard.expires_on': { fr: 'Expire le', en: 'Expires on' },
   'dashboard.no_expiring': { fr: 'Aucun contrat expirant bientôt', en: 'No contracts expiring soon' },
   'dashboard.days_left': { fr: 'jours restants', en: 'days left' },
+  'dashboard.recent_activity': { fr: 'Activité récente', en: 'Recent Activity' },
+  'dashboard.no_activity': { fr: 'Aucune activité récente', en: 'No recent activity' },
+  'dashboard.activity_created': { fr: 'Créé', en: 'Created' },
+  'dashboard.activity_updated': { fr: 'Mis à jour', en: 'Updated' },
+  'dashboard.activity_joined': { fr: 'A rejoint l\'équipe', en: 'Joined the team' },
+  'dashboard.activity_new': { fr: 'Nouveau', en: 'New' },
+  'dashboard.activity_unknown_member': { fr: 'Membre inconnu', en: 'Unknown member' },
 
   // Common
   'common.loading': { fr: 'Chargement...', en: 'Loading...' },
