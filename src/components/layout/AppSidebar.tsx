@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import LanguageToggle from './LanguageToggle';
 import ThemeToggle from './ThemeToggle';
+import planivueLogo from '@/assets/planivue-logo.png';
 import {
   LayoutDashboard,
   Building2,
@@ -11,7 +12,6 @@ import {
   CalendarDays,
   Settings,
   Mail,
-  UserCheck,
   FileText,
   LogOut,
 } from 'lucide-react';
@@ -57,9 +57,7 @@ const AppSidebar = () => {
     <aside className="flex h-screen w-64 flex-col border-r border-sidebar-border bg-sidebar">
       {/* Logo */}
       <div className="flex h-16 items-center gap-2.5 border-b border-sidebar-border px-5">
-        <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary">
-          <UserCheck className="h-4 w-4 text-primary-foreground" />
-        </div>
+        <img src={planivueLogo} alt="PlanivueHub" className="h-10 w-10 object-contain" />
         <div>
           <h1 className="font-display text-sm font-bold text-foreground">{t('app.name')}</h1>
           <p className="text-[10px] text-muted-foreground">{t('app.tagline')}</p>

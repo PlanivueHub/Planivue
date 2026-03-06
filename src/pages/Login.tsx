@@ -6,9 +6,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { UserCheck, AlertCircle } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import ThemeToggle from '@/components/layout/ThemeToggle';
+import planivueLogo from '@/assets/planivue-logo.png';
 
 const Login = () => {
   const { signIn, user, loading } = useAuth();
@@ -43,9 +44,7 @@ const Login = () => {
       {/* Left panel - branding */}
       <div className="hidden w-1/2 flex-col justify-between bg-primary/5 p-12 lg:flex">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-            <UserCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
+          <img src={planivueLogo} alt="PlanivueHub" className="h-12 w-12 object-contain" />
           <span className="font-display text-xl font-bold">{t('app.name')}</span>
         </div>
         <div>
@@ -66,11 +65,11 @@ const Login = () => {
           <LanguageToggle />
         </div>
 
-        <Card className="w-full max-w-md border-border/50 shadow-lg">
-          <CardHeader className="space-y-1 text-center">
-            <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary lg:hidden">
-              <UserCheck className="h-6 w-6 text-primary-foreground" />
-            </div>
+         <Card className="w-full max-w-md border-border/50 shadow-lg">
+           <CardHeader className="space-y-1 text-center">
+             <div className="mx-auto mb-2 lg:hidden">
+               <img src={planivueLogo} alt="PlanivueHub" className="mx-auto h-16 w-16 object-contain" />
+             </div>
             <CardTitle className="font-display text-2xl">{t('auth.login')}</CardTitle>
             <CardDescription>{t('auth.login_subtitle')}</CardDescription>
           </CardHeader>
