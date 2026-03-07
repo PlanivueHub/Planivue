@@ -2,7 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Search, Plus, Send } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, Plus, Send, RotateCcw } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { ScheduleWeek } from '@/types/database';
@@ -15,6 +15,7 @@ interface ScheduleToolbarProps {
   scheduleWeek: ScheduleWeek | null;
   onCreateWeek: () => void;
   onPublishWeek?: () => void;
+  onRevertToDraft?: () => void;
   publishing?: boolean;
 }
 
@@ -26,6 +27,7 @@ const ScheduleToolbar = ({
   scheduleWeek,
   onCreateWeek,
   onPublishWeek,
+  onRevertToDraft,
   publishing,
 }: ScheduleToolbarProps) => {
   const { t, language } = useLanguage();
@@ -81,6 +83,12 @@ const ScheduleToolbar = ({
           <Button onClick={onPublishWeek} disabled={publishing} className="gap-2">
             <Send className="h-4 w-4" />
             {publishing ? t('common.loading') : t('sched.publish')}
+          </Button>
+        )}
+        {scheduleWeek?.status === 'published' && onRevertToDraft && (
+          <Button onClick={onRevertToDraft} disabled={publishing} variant="outline" className="gap-2">
+            <RotateCcw className="h-4 w-4" />
+            {publishing ? t('common.loading') : t('sched.revert_to_draft')}
           </Button>
         )}
       </div>
