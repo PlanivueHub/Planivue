@@ -101,6 +101,23 @@ const SchedulesPage = () => {
     setPublishing(false);
   };
 
+  const revertToDraft = async () => {
+    if (!scheduleWeek) return;
+    setPublishing(true);
+    const { error } = await supabase
+      .from('schedule_weeks')
+      .update({ status: 'draft' })
+      .eq('id', scheduleWeek.id);
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t('sched.reverted_to_draft'));
+      setScheduleWeek({ ...scheduleWeek, status: 'draft' });
+    }
+    setPublishing(false);
+  };
+
   return (
     <div className="animate-fade-in space-y-6">
       {/* Header */}
