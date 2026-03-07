@@ -284,6 +284,22 @@ const ContractsPage = () => {
                 <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder={t('contract.desc_placeholder')} rows={3} />
               </div>
 
+              {/* Billing Rate */}
+              <div className="space-y-2">
+                <Label>{t('contract.billing_rate')}</Label>
+                <div className="relative">
+                  <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="number" step="0.01" min="0"
+                    value={billingRate} onChange={(e) => setBillingRate(e.target.value)}
+                    className="pl-9" placeholder={t('contract.billing_rate_placeholder')}
+                  />
+                </div>
+              </div>
+
+              {/* Break Rules */}
+              <BreakRulesEditor value={breakRules} onChange={setBreakRules} />
+
               <Button type="submit" className="w-full" disabled={submitting || !startDate}>
                 {submitting ? t('common.loading') : t('common.save')}
               </Button>
