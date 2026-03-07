@@ -63,7 +63,7 @@ const ContractsPage = () => {
       .select('*')
       .eq('tenant_id', profile.tenant_id)
       .order('created_at', { ascending: false });
-    if (data) setContracts(data as Contract[]);
+    if (data) setContracts(data as unknown as Contract[]);
     setLoading(false);
   };
 
