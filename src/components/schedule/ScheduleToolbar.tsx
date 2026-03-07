@@ -2,7 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Search, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, Plus, Send } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { ScheduleWeek } from '@/types/database';
