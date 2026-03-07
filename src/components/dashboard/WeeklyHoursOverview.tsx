@@ -3,14 +3,13 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, ReferenceLine } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts';
 import { CalendarDays, Clock, TrendingUp, Timer } from 'lucide-react';
-import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, addWeeks, subWeeks } from 'date-fns';
+import { format, startOfWeek, endOfWeek, eachDayOfInterval, isSameDay, addWeeks } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import type { Shift } from '@/types/database';
+import type { Shift, ShiftAssignment } from '@/types/database';
 
 const STANDARD_HOURS = 8;
 
@@ -30,13 +29,28 @@ const WeeklyHoursOverview = () => {
       if (!user) return;
       setLoading(true);
 
+      // Get assignments for this user
+      const { data: assignData } = await supabase
+        .from('shift_assignments')
+        .select('shift_id')
+        .eq('user_id', user.id)
+        .neq('status', 'cancelled');
+
+      if (!assignData || assignData.length === 0) {
+        setShifts([]);
+        setLoading(false);
+        return;
+      }
+
+      const shiftIds = (assignData as Pick<ShiftAssignment, 'shift_id'>[]).map((a) => a.shift_id);
+
       const { data } = await supabase
         .from('shifts')
         .select('*')
-        .eq('user_id', user.id)
-        .gte('start_time', currentWeekStart.toISOString())
-        .lte('start_time', currentWeekEnd.toISOString())
-        .order('start_time', { ascending: true });
+        .in('id', shiftIds)
+        .gte('start_datetime', currentWeekStart.toISOString())
+        .lte('start_datetime', currentWeekEnd.toISOString())
+        .order('start_datetime', { ascending: true });
 
       setShifts((data as Shift[]) ?? []);
       setLoading(false);
@@ -49,9 +63,9 @@ const WeeklyHoursOverview = () => {
 
   const chartData = useMemo(() => {
     return weekDays.map((day) => {
-      const dayShifts = shifts.filter((s) => isSameDay(new Date(s.start_time), day));
+      const dayShifts = shifts.filter((s) => isSameDay(new Date(s.start_datetime), day));
       const totalHours = dayShifts.reduce((sum, s) => {
-        const dur = (new Date(s.end_time).getTime() - new Date(s.start_time).getTime()) / 3600000;
+        const dur = (new Date(s.end_datetime).getTime() - new Date(s.start_datetime).getTime()) / 3600000;
         return sum + dur;
       }, 0);
       const regular = Math.min(totalHours, STANDARD_HOURS);
@@ -88,7 +102,6 @@ const WeeklyHoursOverview = () => {
 
   return (
     <div className="space-y-6">
-      {/* Summary cards */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {summaryCards.map((card) => (
           <Card key={card.label} className="border-border/50">
@@ -105,7 +118,6 @@ const WeeklyHoursOverview = () => {
         ))}
       </div>
 
-      {/* Weekly chart */}
       <Card className="border-border/50">
         <CardHeader className="flex flex-row items-center justify-between">
           <div>
@@ -119,13 +131,7 @@ const WeeklyHoursOverview = () => {
             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setWeekOffset((o) => o - 1)}>
               <ChevronLeft className="h-4 w-4" />
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-xs"
-              onClick={() => setWeekOffset(0)}
-              disabled={weekOffset === 0}
-            >
+            <Button variant="ghost" size="sm" className="text-xs" onClick={() => setWeekOffset(0)} disabled={weekOffset === 0}>
               {t('emp.this_week')}
             </Button>
             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => setWeekOffset((o) => o + 1)} disabled={weekOffset >= 0}>
@@ -142,52 +148,21 @@ const WeeklyHoursOverview = () => {
             <>
               <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={chartData} barSize={32}>
-                  <XAxis
-                    dataKey="day"
-                    tick={{ fontSize: 12 }}
-                    stroke="hsl(var(--muted-foreground))"
-                    axisLine={false}
-                    tickLine={false}
-                  />
-                  <YAxis
-                    tick={{ fontSize: 12 }}
-                    stroke="hsl(var(--muted-foreground))"
-                    axisLine={false}
-                    tickLine={false}
-                    tickFormatter={(v) => `${v}h`}
-                    domain={[0, 'auto']}
-                  />
+                  <XAxis dataKey="day" tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" axisLine={false} tickLine={false} />
+                  <YAxis tick={{ fontSize: 12 }} stroke="hsl(var(--muted-foreground))" axisLine={false} tickLine={false} tickFormatter={(v) => `${v}h`} domain={[0, 'auto']} />
                   <Tooltip
                     formatter={(value: number, name: string) => {
-                      const labels: Record<string, string> = {
-                        regular: t('emp.regular_hours'),
-                        overtime: t('emp.overtime_hours'),
-                      };
+                      const labels: Record<string, string> = { regular: t('emp.regular_hours'), overtime: t('emp.overtime_hours') };
                       return [`${value}h`, labels[name] || name];
                     }}
-                    labelFormatter={(label: string, payload: any[]) => {
-                      if (payload?.[0]?.payload?.date) return payload[0].payload.date;
-                      return label;
-                    }}
-                    contentStyle={{
-                      backgroundColor: 'hsl(var(--card))',
-                      border: '1px solid hsl(var(--border))',
-                      borderRadius: '8px',
-                      color: 'hsl(var(--foreground))',
-                    }}
+                    labelFormatter={(label: string, payload: any[]) => payload?.[0]?.payload?.date ?? label}
+                    contentStyle={{ backgroundColor: 'hsl(var(--card))', border: '1px solid hsl(var(--border))', borderRadius: '8px', color: 'hsl(var(--foreground))' }}
                   />
-                  <ReferenceLine
-                    y={STANDARD_HOURS}
-                    stroke="hsl(var(--muted-foreground))"
-                    strokeDasharray="4 4"
-                    strokeOpacity={0.5}
-                  />
+                  <ReferenceLine y={STANDARD_HOURS} stroke="hsl(var(--muted-foreground))" strokeDasharray="4 4" strokeOpacity={0.5} />
                   <Bar dataKey="regular" stackId="hours" fill="hsl(var(--chart-primary))" radius={[0, 0, 0, 0]} />
                   <Bar dataKey="overtime" stackId="hours" fill="hsl(var(--chart-overtime))" radius={[4, 4, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
-
-              {/* Legend */}
               <div className="mt-4 flex items-center justify-center gap-6 text-sm">
                 <div className="flex items-center gap-2">
                   <span className="inline-block h-3 w-3 rounded-sm bg-chart-primary" />

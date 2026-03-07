@@ -2,22 +2,23 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useLanguage } from '@/i18n/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { CalendarDays, Clock, FileText } from 'lucide-react';
 import { format, isToday, isTomorrow, isPast, isFuture, startOfDay } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
-import type { Shift, Schedule } from '@/types/database';
+import type { Shift, ShiftAssignment, ScheduleWeek } from '@/types/database';
 
-interface EnrichedShift extends Shift {
-  schedule_title: string;
-  schedule_status: string;
+interface EnrichedShift {
+  shift: Shift;
+  assignment: ShiftAssignment;
+  week_status: string;
 }
 
 const MySchedulePage = () => {
   const { user } = useAuth();
   const { t, language } = useLanguage();
-  const [shifts, setShifts] = useState<EnrichedShift[]>([]);
+  const [enrichedShifts, setEnrichedShifts] = useState<EnrichedShift[]>([]);
   const [loading, setLoading] = useState(true);
   const dateLocale = language === 'fr' ? frLocale : enCA;
 
@@ -26,45 +27,61 @@ const MySchedulePage = () => {
       if (!user) return;
       setLoading(true);
 
-      // Fetch shifts for this user with schedule info
-      const { data: shiftsData } = await supabase
-        .from('shifts')
+      // Get assignments for this user
+      const { data: assignData } = await supabase
+        .from('shift_assignments')
         .select('*')
         .eq('user_id', user.id)
-        .order('start_time', { ascending: true });
+        .neq('status', 'cancelled');
 
-      if (!shiftsData || shiftsData.length === 0) {
-        setShifts([]);
+      if (!assignData || assignData.length === 0) {
+        setEnrichedShifts([]);
         setLoading(false);
         return;
       }
 
-      // Fetch related schedules (only published ones shown)
-      const scheduleIds = [...new Set((shiftsData as Shift[]).map((s) => s.schedule_id))];
-      const { data: schedulesData } = await supabase
-        .from('schedules')
-        .select('id, title, status')
-        .in('id', scheduleIds);
+      const assignments = assignData as ShiftAssignment[];
+      const shiftIds = assignments.map((a) => a.shift_id);
 
-      const scheduleMap = new Map<string, { title: string; status: string }>();
-      if (schedulesData) {
-        (schedulesData as Pick<Schedule, 'id' | 'title' | 'status'>[]).forEach((s) => {
-          scheduleMap.set(s.id, { title: s.title, status: s.status });
+      // Fetch shifts
+      const { data: shiftsData } = await supabase
+        .from('shifts')
+        .select('*')
+        .in('id', shiftIds)
+        .order('start_datetime', { ascending: true });
+
+      if (!shiftsData) {
+        setEnrichedShifts([]);
+        setLoading(false);
+        return;
+      }
+
+      const shifts = shiftsData as Shift[];
+      const weekIds = [...new Set(shifts.map((s) => s.schedule_week_id))];
+
+      // Fetch schedule weeks (only published)
+      const { data: weeksData } = await supabase
+        .from('schedule_weeks')
+        .select('id, status')
+        .in('id', weekIds);
+
+      const weekMap = new Map<string, string>();
+      if (weeksData) {
+        (weeksData as Pick<ScheduleWeek, 'id' | 'status'>[]).forEach((w) => {
+          weekMap.set(w.id, w.status);
         });
       }
 
-      const enriched: EnrichedShift[] = (shiftsData as Shift[])
-        .map((shift) => {
-          const sched = scheduleMap.get(shift.schedule_id);
-          return {
-            ...shift,
-            schedule_title: sched?.title ?? '—',
-            schedule_status: sched?.status ?? 'draft',
-          };
-        })
-        .filter((s) => s.schedule_status === 'published');
+      const enriched: EnrichedShift[] = [];
+      for (const shift of shifts) {
+        const weekStatus = weekMap.get(shift.schedule_week_id) ?? 'draft';
+        if (weekStatus !== 'published') continue;
+        const assignment = assignments.find((a) => a.shift_id === shift.id);
+        if (!assignment) continue;
+        enriched.push({ shift, assignment, week_status: weekStatus });
+      }
 
-      setShifts(enriched);
+      setEnrichedShifts(enriched);
       setLoading(false);
     };
 
@@ -78,19 +95,22 @@ const MySchedulePage = () => {
     return null;
   };
 
-  const upcomingShifts = shifts.filter((s) => isFuture(new Date(s.end_time)) || isToday(startOfDay(new Date(s.start_time))));
-  const pastShifts = shifts.filter((s) => isPast(new Date(s.end_time)) && !isToday(startOfDay(new Date(s.start_time))));
+  const upcomingShifts = enrichedShifts.filter((s) =>
+    isFuture(new Date(s.shift.end_datetime)) || isToday(startOfDay(new Date(s.shift.start_datetime)))
+  );
+  const pastShifts = enrichedShifts.filter((s) =>
+    isPast(new Date(s.shift.end_datetime)) && !isToday(startOfDay(new Date(s.shift.start_datetime)))
+  );
 
-  const renderShiftCard = (shift: EnrichedShift) => {
-    const start = new Date(shift.start_time);
-    const end = new Date(shift.end_time);
-    const dayLabel = getShiftDayLabel(shift.start_time);
+  const renderShiftCard = (item: EnrichedShift) => {
+    const start = new Date(item.shift.start_datetime);
+    const end = new Date(item.shift.end_datetime);
+    const dayLabel = getShiftDayLabel(item.shift.start_datetime);
     const duration = ((end.getTime() - start.getTime()) / 3600000).toFixed(1);
 
     return (
-      <Card key={shift.id} className="border-border/50 transition-shadow hover:shadow-md">
+      <Card key={item.assignment.id} className="border-border/50 transition-shadow hover:shadow-md">
         <CardContent className="flex items-start gap-4 p-4">
-          {/* Date block */}
           <div className="flex h-14 w-14 shrink-0 flex-col items-center justify-center rounded-lg bg-primary/10">
             <span className="text-xs font-medium uppercase text-primary">
               {format(start, 'EEE', { locale: dateLocale })}
@@ -99,11 +119,11 @@ const MySchedulePage = () => {
               {format(start, 'd')}
             </span>
           </div>
-
-          {/* Details */}
           <div className="flex-1 space-y-1">
             <div className="flex items-center gap-2">
-              <span className="font-medium">{shift.schedule_title}</span>
+              <span className="font-medium">
+                {item.shift.label ?? format(start, 'EEEE, MMM d', { locale: dateLocale })}
+              </span>
               {dayLabel && (
                 <Badge variant="secondary" className="text-[10px]">{dayLabel}</Badge>
               )}
@@ -115,10 +135,10 @@ const MySchedulePage = () => {
               </span>
               <span className="text-xs">({duration}h)</span>
             </div>
-            {shift.notes && (
+            {item.shift.notes && (
               <div className="flex items-start gap-1 pt-1 text-xs text-muted-foreground">
                 <FileText className="mt-0.5 h-3 w-3 shrink-0" />
-                <span>{shift.notes}</span>
+                <span>{item.shift.notes}</span>
               </div>
             )}
           </div>
@@ -129,7 +149,6 @@ const MySchedulePage = () => {
 
   return (
     <div className="animate-fade-in space-y-8">
-      {/* Header */}
       <div>
         <div className="flex items-center gap-2">
           <CalendarDays className="h-5 w-5 text-primary" />
@@ -143,7 +162,7 @@ const MySchedulePage = () => {
           <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
           <p className="mt-3 text-sm text-muted-foreground">{t('common.loading')}</p>
         </div>
-      ) : shifts.length === 0 ? (
+      ) : enrichedShifts.length === 0 ? (
         <Card className="border-border/50">
           <CardContent className="flex flex-col items-center justify-center py-16">
             <CalendarDays className="h-12 w-12 text-muted-foreground/40" />
@@ -152,7 +171,6 @@ const MySchedulePage = () => {
         </Card>
       ) : (
         <>
-          {/* Upcoming */}
           {upcomingShifts.length > 0 && (
             <div className="space-y-4">
               <h2 className="font-display text-lg font-semibold">{t('mysched.upcoming')}</h2>
@@ -161,8 +179,6 @@ const MySchedulePage = () => {
               </div>
             </div>
           )}
-
-          {/* Past */}
           {pastShifts.length > 0 && (
             <div className="space-y-4">
               <h2 className="font-display text-lg font-semibold text-muted-foreground">{t('mysched.past')}</h2>
