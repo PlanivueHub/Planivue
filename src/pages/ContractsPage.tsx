@@ -77,6 +77,7 @@ const ContractsPage = () => {
     setTitle(''); setClientName(''); setStatus('draft');
     setStartDate(undefined); setEndDate(undefined);
     setValue(''); setDescription(''); setEditing(null);
+    setBillingRate(''); setBreakRules([]);
   };
 
   const openEdit = (c: Contract) => {
