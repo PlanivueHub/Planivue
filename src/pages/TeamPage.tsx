@@ -225,6 +225,11 @@ const TeamPage = () => {
                           </Select>
                         )}
                       </TableCell>
+                      <TableCell>
+                        {profile?.tenant_id && (
+                          <EmployeeRateEditor userId={member.id} tenantId={profile.tenant_id} />
+                        )}
+                      </TableCell>
                       <TableCell className="font-mono text-xs text-muted-foreground">
                         {format(new Date(member.created_at), 'PPP', { locale: dateLocale })}
                       </TableCell>
