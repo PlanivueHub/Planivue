@@ -5,8 +5,8 @@ import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { UserCheck, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { AlertCircle, CheckCircle2, User, Mail, Lock, Eye, EyeOff, Building2 } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import ThemeToggle from '@/components/layout/ThemeToggle';
 
@@ -18,6 +18,7 @@ const Register = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -58,106 +59,157 @@ const Register = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left panel */}
-      <div className="hidden w-1/2 flex-col justify-between bg-primary/5 p-12 lg:flex">
-        <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary">
-            <UserCheck className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span className="font-display text-xl font-bold">{t('app.name')}</span>
-        </div>
-        <div>
-          <h2 className="font-display text-4xl font-bold leading-tight">
-            {t('app.tagline')}
-          </h2>
-          <p className="mt-4 max-w-md text-lg text-muted-foreground">
-            {t('auth.register_subtitle')}
-          </p>
-        </div>
-        <div />
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      {/* Top-right controls */}
+      <div className="absolute right-6 top-6 flex items-center gap-1">
+        <ThemeToggle />
+        <LanguageToggle />
       </div>
 
-      {/* Right panel */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6">
-        <div className="absolute right-6 top-6 flex items-center gap-1">
-          <ThemeToggle />
-          <LanguageToggle />
-        </div>
-
+      <div className="w-full max-w-md">
         {success ? (
-          <Card className="w-full max-w-md border-border/50 shadow-lg">
-            <CardContent className="flex flex-col items-center gap-4 py-12">
+          <div className="rounded-2xl border border-border/50 bg-card p-8 shadow-xl">
+            <div className="flex flex-col items-center gap-4 py-6">
               <CheckCircle2 className="h-14 w-14 text-success" />
-              <h2 className="font-display text-2xl font-bold">{t('dashboard.welcome')} !</h2>
+              <h2 className="font-display text-2xl font-bold text-card-foreground">{t('dashboard.welcome')} !</h2>
               <p className="text-center text-muted-foreground">
                 {t('auth.register_subtitle')}
               </p>
               <Link to="/login">
                 <Button>{t('auth.login_btn')}</Button>
               </Link>
-            </CardContent>
-          </Card>
+            </div>
+          </div>
         ) : (
-          <Card className="w-full max-w-md border-border/50 shadow-lg">
-            <CardHeader className="space-y-1 text-center">
-              <div className="mx-auto mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-primary lg:hidden">
-                <UserCheck className="h-6 w-6 text-primary-foreground" />
+          <div className="rounded-2xl border border-border/50 bg-card p-8 shadow-xl">
+            {/* Header */}
+            <div className="mb-6">
+              <h1 className="font-display text-2xl font-bold text-card-foreground">
+                {t('auth.welcome_back')}
+              </h1>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t('auth.register_subtitle')}
+              </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-5">
+              {error && (
+                <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {error}
+                </div>
+              )}
+
+              {/* Full Name */}
+              <div className="space-y-2">
+                <Label htmlFor="fullName" className="text-card-foreground">{t('auth.full_name')}</Label>
+                <div className="relative">
+                  <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="fullName"
+                    placeholder="John Alley"
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                    required
+                    className="pl-10"
+                  />
+                </div>
               </div>
-              <CardTitle className="font-display text-2xl">{t('auth.register')}</CardTitle>
-              <CardDescription>{t('auth.register_subtitle')}</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {error && (
-                  <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                    <AlertCircle className="h-4 w-4 shrink-0" />
-                    {error}
-                  </div>
-                )}
 
-                <div className="space-y-2">
-                  <Label htmlFor="fullName">{t('auth.full_name')}</Label>
-                  <Input id="fullName" value={fullName} onChange={(e) => setFullName(e.target.value)} required />
+              {/* Organization Name */}
+              <div className="space-y-2">
+                <Label htmlFor="orgName" className="text-card-foreground">{t('auth.org_name')}</Label>
+                <div className="relative">
+                  <Building2 className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="orgName"
+                    placeholder="Acme Inc."
+                    value={orgName}
+                    onChange={(e) => setOrgName(e.target.value)}
+                    required
+                    className="pl-10"
+                  />
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="orgName">{t('auth.org_name')}</Label>
-                  <Input id="orgName" value={orgName} onChange={(e) => setOrgName(e.target.value)} required />
+              {/* Email */}
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-card-foreground">{t('auth.email')}</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="john@example.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    autoComplete="email"
+                    className="pl-10"
+                  />
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">{t('auth.email')}</Label>
-                  <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+              {/* Password */}
+              <div className="space-y-2">
+                <Label htmlFor="password" className="text-card-foreground">{t('auth.password')}</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="Min. 8 characters"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                    minLength={6}
+                    className="pl-10 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                    tabIndex={-1}
+                  >
+                    {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                  </button>
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="password">{t('auth.password')}</Label>
-                  <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+              {/* Confirm Password */}
+              <div className="space-y-2">
+                <Label htmlFor="confirmPassword" className="text-card-foreground">{t('auth.confirm_password')}</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="••••••"
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    required
+                    className="pl-10"
+                  />
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  <Label htmlFor="confirmPassword">{t('auth.confirm_password')}</Label>
-                  <Input id="confirmPassword" type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-                </div>
+              {/* Submit */}
+              <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={submitting}>
+                {submitting ? t('auth.loading') : t('auth.register_btn')}
+              </Button>
 
-                <Button type="submit" className="w-full" disabled={submitting}>
-                  {submitting ? t('auth.loading') : t('auth.register_btn')}
-                </Button>
+              <p className="text-center text-sm text-muted-foreground">
+                {t('auth.has_account')}{' '}
+                <Link to="/login" className="font-medium text-primary hover:underline">
+                  {t('auth.login')}
+                </Link>
+              </p>
 
-                <p className="text-center text-sm text-muted-foreground">
-                  {t('auth.has_account')}{' '}
-                  <Link to="/login" className="font-medium text-primary hover:underline">
-                    {t('auth.login')}
-                  </Link>
-                </p>
-
-                <p className="text-center text-xs text-muted-foreground/70">
-                  {t('auth.employee_notice')}
-                </p>
-              </form>
-            </CardContent>
-          </Card>
+              <p className="text-center text-xs text-muted-foreground/70">
+                {t('auth.employee_notice')}
+              </p>
+            </form>
+          </div>
         )}
       </div>
     </div>
