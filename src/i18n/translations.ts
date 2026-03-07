@@ -372,6 +372,89 @@ export const translations = {
   'addemp.fill_required': { fr: 'Le nom et le courriel sont requis', en: 'Name and email are required' },
   'addemp.already_invited': { fr: 'Cet employé a déjà été invité', en: 'This employee has already been invited' },
   'addemp.success': { fr: 'Invitation envoyée avec succès', en: 'Invitation sent successfully' },
+
+  // Financials
+  'nav.financials': { fr: 'Finances', en: 'Financials' },
+  'fin.title': { fr: 'Tableau financier', en: 'Financial Dashboard' },
+  'fin.subtitle': { fr: 'Moteur de calcul des coûts, marges et scénarios comparatifs', en: 'Cost calculation engine, margins, and comparative scenarios' },
+  'fin.tab_engine': { fr: 'Calculateur', en: 'Calculator' },
+  'fin.tab_scenarios': { fr: 'Scénarios', en: 'Scenarios' },
+  'fin.tab_shifts': { fr: 'Quarts', en: 'Shifts' },
+  'fin.tab_config': { fr: 'Configuration', en: 'Configuration' },
+
+  // Employer costs
+  'fin.employer_costs': { fr: 'Charges patronales', en: 'Employer Costs' },
+  'fin.employer_costs_desc': { fr: 'Pourcentages estimés des charges patronales obligatoires', en: 'Estimated mandatory employer cost percentages' },
+  'fin.total_employer_pct': { fr: 'Total charges patronales', en: 'Total Employer Costs' },
+
+  // Calculation engine
+  'fin.calc_inputs': { fr: 'Paramètres de calcul', en: 'Calculation Inputs' },
+  'fin.calc_inputs_desc': { fr: 'Ajustez les taux et heures pour simuler les coûts en temps réel', en: 'Adjust rates and hours to simulate costs in real-time' },
+  'fin.calc_results': { fr: 'Résultats financiers', en: 'Financial Results' },
+  'fin.calc_results_desc': { fr: 'Mise à jour instantanée selon les paramètres', en: 'Updates instantly based on inputs' },
+  'fin.hourly_rate': { fr: 'Taux horaire', en: 'Hourly Rate' },
+  'fin.billing_rate': { fr: 'Taux facturation', en: 'Billing Rate' },
+  'fin.total_hours': { fr: 'Heures totales', en: 'Total Hours' },
+  'fin.premium_hours': { fr: 'Heures avec primes', en: 'Premium Hours' },
+  'fin.evening_hours': { fr: 'Heures soirée', en: 'Evening Hours' },
+  'fin.night_hours': { fr: 'Heures nuit', en: 'Night Hours' },
+  'fin.weekend_hours': { fr: 'Heures fin de sem.', en: 'Weekend Hours' },
+  'fin.holiday_hours': { fr: 'Heures fériées', en: 'Holiday Hours' },
+  'fin.hours_breakdown': { fr: 'Répartition des heures', en: 'Hours Breakdown' },
+  'fin.regular': { fr: 'Régulières', en: 'Regular' },
+  'fin.overtime': { fr: 'Supplémentaires', en: 'Overtime' },
+  'fin.break_deductions': { fr: 'Déductions pause', en: 'Break Deductions' },
+  'fin.regular_cost': { fr: 'Coût régulier', en: 'Regular Cost' },
+  'fin.overtime_cost': { fr: 'Coût heures supp.', en: 'Overtime Cost' },
+  'fin.premium_cost': { fr: 'Coût primes', en: 'Premium Cost' },
+  'fin.gross_wage': { fr: 'Salaire brut', en: 'Gross Wage' },
+  'fin.employer_charges': { fr: 'Charges patronales', en: 'Employer Charges' },
+  'fin.total_cost': { fr: 'Coût total', en: 'Total Cost' },
+  'fin.revenue': { fr: 'Revenus', en: 'Revenue' },
+  'fin.profit': { fr: 'Profit', en: 'Profit' },
+  'fin.margin': { fr: 'Marge', en: 'Margin' },
+
+  // Comparative Analysis
+  'fin.comparative_title': { fr: 'Analyse comparative', en: 'Comparative Analysis' },
+  'fin.comparative_desc': { fr: 'Comparez l\'impact financier entre 35.7h et 40h par semaine', en: 'Compare the financial impact between 35.7h and 40h work weeks' },
+  'fin.week': { fr: 'sem.', en: 'wk' },
+  'fin.has_overtime': { fr: 'Heures supp.', en: 'Has OT' },
+  'fin.overtime_impact': { fr: 'Impact des heures supp.', en: 'Overtime Impact' },
+
+  // Overtime config
+  'fin.overtime_config': { fr: 'Heures supplémentaires', en: 'Overtime Rules' },
+  'fin.overtime_config_desc': { fr: 'Seuil opérationnel et multiplicateur', en: 'Operational threshold and multiplier' },
+  'fin.ot_threshold': { fr: 'Seuil (heures/sem.)', en: 'Threshold (hrs/wk)' },
+  'fin.ot_multiplier': { fr: 'Multiplicateur', en: 'Multiplier' },
+
+  // Premiums config
+  'fin.premiums_config': { fr: 'Primes automatiques', en: 'Automatic Premiums' },
+  'fin.premiums_config_desc': { fr: 'Primes horaires par type de quart', en: 'Hourly premiums by shift type' },
+  'fin.prem_evening': { fr: 'Soirée', en: 'Evening' },
+  'fin.prem_night': { fr: 'Nuit', en: 'Night' },
+  'fin.prem_weekend': { fr: 'Fin de semaine', en: 'Weekend' },
+  'fin.prem_holiday': { fr: 'Jour férié', en: 'Holiday' },
+
+  // Break config
+  'fin.break_config': { fr: 'Règles de pause', en: 'Break Rules' },
+  'fin.break_config_desc': { fr: 'Pause payée vs non payée — impact sur les heures et les coûts', en: 'Paid vs unpaid breaks — impact on hours and costs' },
+  'fin.break_paid': { fr: 'Pause payée', en: 'Paid Break' },
+  'fin.break_unpaid': { fr: 'Pause non payée', en: 'Unpaid Break' },
+  'fin.break_paid_desc': { fr: 'Les heures de pause comptent dans le total', en: 'Break hours counted in total' },
+  'fin.break_unpaid_desc': { fr: 'Le temps de pause est déduit du total', en: 'Break time deducted from total' },
+  'fin.hours_counted': { fr: 'Heures comptées', en: 'Hours Counted' },
+  'fin.time_deducted': { fr: 'Temps déduit', en: 'Time Deducted' },
+  'fin.break_duration': { fr: 'Durée pause', en: 'Break Duration' },
+  'fin.break_threshold': { fr: 'Après (heures)', en: 'After (hours)' },
+
+  // Shift financials table
+  'fin.shift_financials': { fr: 'Finances par quart', en: 'Shift Financials' },
+  'fin.shift_financials_desc': { fr: 'Coûts et marges à granularité quart de travail', en: 'Costs and margins at shift-level granularity' },
+  'fin.contract': { fr: 'Contrat', en: 'Contract' },
+  'fin.hours_label': { fr: 'Heures', en: 'Hours' },
+  'fin.wage_rate': { fr: 'Taux salaire', en: 'Wage Rate' },
+  'fin.bill_rate': { fr: 'Taux fact.', en: 'Bill Rate' },
+  'fin.totals': { fr: 'Totaux', en: 'Totals' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;

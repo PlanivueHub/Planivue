@@ -20,6 +20,7 @@ import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
 import MySchedulePage from "./pages/MySchedulePage";
 import ContractsPage from "./pages/ContractsPage";
+import FinancialsPage from "./pages/FinancialsPage";
 import AvailabilityPage from "./pages/AvailabilityPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
@@ -81,6 +82,11 @@ const App = () => (
                 <Route path="/contracts" element={
                   <ProtectedRoute roles={['client_admin', 'client_manager']}>
                     <ContractsPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/financials" element={
+                  <ProtectedRoute roles={['client_admin', 'client_manager']}>
+                    <FinancialsPage />
                   </ProtectedRoute>
                 } />
                 <Route path="/my-schedule" element={
