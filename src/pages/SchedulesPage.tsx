@@ -84,6 +84,23 @@ const SchedulesPage = () => {
     });
   };
 
+  const publishWeek = async () => {
+    if (!scheduleWeek) return;
+    setPublishing(true);
+    const { error } = await supabase
+      .from('schedule_weeks')
+      .update({ status: 'published' })
+      .eq('id', scheduleWeek.id);
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t('sched.published'));
+      setScheduleWeek({ ...scheduleWeek, status: 'published' });
+    }
+    setPublishing(false);
+  };
+
   return (
     <div className="animate-fade-in space-y-6">
       {/* Header */}
