@@ -115,12 +115,6 @@ const Login = () => {
               </div>
             </div>
 
-            {/* Divider */}
-            <div className="relative flex items-center py-1">
-              <div className="flex-1 border-t border-border" />
-              <span className="px-3 text-xs text-muted-foreground">{t('auth.or_sign_in_email')}</span>
-              <div className="flex-1 border-t border-border" />
-            </div>
 
             {/* Submit */}
             <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={submitting}>
