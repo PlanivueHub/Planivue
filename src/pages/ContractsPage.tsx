@@ -23,7 +23,8 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
-import type { Contract } from '@/types/database';
+import type { Contract, BreakRule } from '@/types/database';
+import BreakRulesEditor from '@/components/contracts/BreakRulesEditor';
 
 type ContractStatus = 'draft' | 'active' | 'completed' | 'cancelled';
 
@@ -48,6 +49,8 @@ const ContractsPage = () => {
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [value, setValue] = useState('');
   const [description, setDescription] = useState('');
+  const [billingRate, setBillingRate] = useState('');
+  const [breakRules, setBreakRules] = useState<BreakRule[]>([]);
 
   const dateLocale = language === 'fr' ? frLocale : enCA;
   const canManage = hasRole('client_admin') || hasRole('client_manager');
@@ -74,6 +77,7 @@ const ContractsPage = () => {
     setTitle(''); setClientName(''); setStatus('draft');
     setStartDate(undefined); setEndDate(undefined);
     setValue(''); setDescription(''); setEditing(null);
+    setBillingRate(''); setBreakRules([]);
   };
 
   const openEdit = (c: Contract) => {
@@ -85,6 +89,8 @@ const ContractsPage = () => {
     setEndDate(c.end_date ? new Date(c.end_date) : undefined);
     setValue(c.value?.toString() ?? '');
     setDescription(c.description ?? '');
+    setBillingRate(c.billing_rate?.toString() ?? '');
+    setBreakRules(c.break_rules ?? []);
     setDialogOpen(true);
   };
 
@@ -101,6 +107,8 @@ const ContractsPage = () => {
       end_date: endDate ? format(endDate, 'yyyy-MM-dd') : null,
       value: value ? parseFloat(value) : null,
       description: description || null,
+      billing_rate: billingRate ? parseFloat(billingRate) : null,
+      break_rules: breakRules,
     };
 
     if (editing) {
@@ -275,6 +283,22 @@ const ContractsPage = () => {
                 <Label>{t('contract.description')}</Label>
                 <Textarea value={description} onChange={(e) => setDescription(e.target.value)} placeholder={t('contract.desc_placeholder')} rows={3} />
               </div>
+
+              {/* Billing Rate */}
+              <div className="space-y-2">
+                <Label>{t('contract.billing_rate')}</Label>
+                <div className="relative">
+                  <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    type="number" step="0.01" min="0"
+                    value={billingRate} onChange={(e) => setBillingRate(e.target.value)}
+                    className="pl-9" placeholder={t('contract.billing_rate_placeholder')}
+                  />
+                </div>
+              </div>
+
+              {/* Break Rules */}
+              <BreakRulesEditor value={breakRules} onChange={setBreakRules} />
 
               <Button type="submit" className="w-full" disabled={submitting || !startDate}>
                 {submitting ? t('common.loading') : t('common.save')}

@@ -71,9 +71,47 @@ export interface Contract {
   end_date: string | null;
   value: number | null;
   description: string | null;
+  billing_rate: number | null;
+  break_rules: BreakRule[];
   created_by: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface BreakRule {
+  threshold_hours: number;
+  break_minutes: number;
+}
+
+export interface EmployeeDetail {
+  id: string;
+  user_id: string;
+  tenant_id: string;
+  hourly_rate: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface RecurringAvailability {
+  id: string;
+  user_id: string;
+  tenant_id: string;
+  day_of_week: number;
+  start_time: string;
+  end_time: string;
+  created_at: string;
+}
+
+export interface AvailabilityException {
+  id: string;
+  user_id: string;
+  tenant_id: string;
+  exception_date: string;
+  is_available: boolean;
+  start_time: string | null;
+  end_time: string | null;
+  reason: string | null;
+  created_at: string;
 }
 
 export interface PlatformMetrics {

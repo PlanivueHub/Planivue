@@ -19,6 +19,7 @@ import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
 import MySchedulePage from "./pages/MySchedulePage";
 import ContractsPage from "./pages/ContractsPage";
+import AvailabilityPage from "./pages/AvailabilityPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
 
@@ -80,6 +81,7 @@ const App = () => (
                     <MySchedulePage />
                   </ProtectedRoute>
                 } />
+                <Route path="/availability" element={<AvailabilityPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
               </Route>
 

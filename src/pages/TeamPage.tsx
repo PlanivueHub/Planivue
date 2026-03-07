@@ -25,6 +25,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Profile, AppRole, UserRole } from '@/types/database';
+import EmployeeRateEditor from '@/components/team/EmployeeRateEditor';
 
 interface TeamMember extends Profile {
   roles: AppRole[];
@@ -174,9 +175,10 @@ const TeamPage = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{t('auth.full_name')}</TableHead>
+                 <TableHead>{t('auth.full_name')}</TableHead>
                   <TableHead>{t('auth.email')}</TableHead>
                   <TableHead>{t('inv.role')}</TableHead>
+                  <TableHead>{t('emp_detail.hourly_rate')}</TableHead>
                   <TableHead>{t('team.joined')}</TableHead>
                   <TableHead className="text-right">{t('saas.actions')}</TableHead>
                 </TableRow>
@@ -221,6 +223,11 @@ const TeamPage = () => {
                               ))}
                             </SelectContent>
                           </Select>
+                        )}
+                      </TableCell>
+                      <TableCell>
+                        {profile?.tenant_id && (
+                          <EmployeeRateEditor userId={member.id} tenantId={profile.tenant_id} />
                         )}
                       </TableCell>
                       <TableCell className="font-mono text-xs text-muted-foreground">
