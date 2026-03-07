@@ -85,6 +85,12 @@ const ScheduleToolbar = ({
             {publishing ? t('common.loading') : t('sched.publish')}
           </Button>
         )}
+        {scheduleWeek?.status === 'published' && onRevertToDraft && (
+          <Button onClick={onRevertToDraft} disabled={publishing} variant="outline" className="gap-2">
+            <RotateCcw className="h-4 w-4" />
+            {publishing ? t('common.loading') : t('sched.revert_to_draft')}
+          </Button>
+        )}
       </div>
     </div>
   );

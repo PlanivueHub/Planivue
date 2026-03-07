@@ -138,6 +138,7 @@ const SchedulesPage = () => {
         scheduleWeek={scheduleWeek}
         onCreateWeek={createWeek}
         onPublishWeek={publishWeek}
+        onRevertToDraft={revertToDraft}
         publishing={publishing}
       />
 
