@@ -27,6 +27,7 @@ const ScheduleToolbar = ({
   scheduleWeek,
   onCreateWeek,
   onPublishWeek,
+  onRevertToDraft,
   publishing,
 }: ScheduleToolbarProps) => {
   const { t, language } = useLanguage();
