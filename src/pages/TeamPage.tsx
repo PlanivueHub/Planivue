@@ -171,8 +171,8 @@ const TeamPage = () => {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="font-display text-2xl font-bold">{t('emp.title')}</h1>
-          <p className="mt-0.5 text-sm text-muted-foreground">{t('emp.subtitle')}</p>
+          <h1 className="font-display text-2xl font-bold">{t('empmgmt.title')}</h1>
+          <p className="mt-0.5 text-sm text-muted-foreground">{t('empmgmt.subtitle')}</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="relative">
