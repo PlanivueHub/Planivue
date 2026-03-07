@@ -107,6 +107,8 @@ const ContractsPage = () => {
       end_date: endDate ? format(endDate, 'yyyy-MM-dd') : null,
       value: value ? parseFloat(value) : null,
       description: description || null,
+      billing_rate: billingRate ? parseFloat(billingRate) : null,
+      break_rules: breakRules,
     };
 
     if (editing) {
