@@ -49,6 +49,8 @@ const ContractsPage = () => {
   const [endDate, setEndDate] = useState<Date | undefined>();
   const [value, setValue] = useState('');
   const [description, setDescription] = useState('');
+  const [billingRate, setBillingRate] = useState('');
+  const [breakRules, setBreakRules] = useState<BreakRule[]>([]);
 
   const dateLocale = language === 'fr' ? frLocale : enCA;
   const canManage = hasRole('client_admin') || hasRole('client_manager');
