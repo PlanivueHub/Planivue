@@ -33,6 +33,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Profile, AppRole, UserRole } from '@/types/database';
+import AddEmployeeDialog from '@/components/team/AddEmployeeDialog';
 
 interface TeamMember extends Profile {
   roles: AppRole[];
