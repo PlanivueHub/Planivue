@@ -61,6 +61,13 @@ export const translations = {
   'saas.total_shifts': { fr: 'Total Quarts', en: 'Total Shifts' },
   'saas.metric_schedules_desc': { fr: 'Horaires actuellement publiés', en: 'Currently published schedules' },
   'saas.metric_shifts_desc': { fr: 'Quarts de travail sur la plateforme', en: 'Shifts across the platform' },
+  'saas.tenants_title': { fr: 'Gestion des organisations', en: 'Tenants Management' },
+  'saas.create_tenant': { fr: 'Nouvelle organisation', en: 'New Tenant' },
+  'saas.tenant_created': { fr: 'Organisation créée avec succès', en: 'Tenant created successfully' },
+  'saas.tenant_deleted': { fr: 'Organisation supprimée', en: 'Tenant deleted' },
+  'saas.tenants_count': { fr: 'organisation(s)', en: 'tenant(s)' },
+  'saas.delete_tenant_title': { fr: 'Supprimer l\'organisation', en: 'Delete Tenant' },
+  'saas.delete_tenant_confirm': { fr: 'Êtes-vous sûr de vouloir supprimer définitivement', en: 'Are you sure you want to permanently delete' },
 
   // Dashboard
   'dashboard.welcome': { fr: 'Bienvenue', en: 'Welcome' },
