@@ -110,7 +110,7 @@ const TeamPage = () => {
 
   const handleRoleChange = async (userId: string, currentRole: AppRole, newRole: AppRole) => {
     if (userId === user?.id) {
-      toast.error(t('emp.cannot_change_own'));
+      toast.error(t('empmgmt.cannot_change_own'));
       return;
     }
     await supabase.from('user_roles').delete().eq('user_id', userId).eq('role', currentRole);
