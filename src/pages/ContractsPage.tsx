@@ -89,6 +89,8 @@ const ContractsPage = () => {
     setEndDate(c.end_date ? new Date(c.end_date) : undefined);
     setValue(c.value?.toString() ?? '');
     setDescription(c.description ?? '');
+    setBillingRate(c.billing_rate?.toString() ?? '');
+    setBreakRules(c.break_rules ?? []);
     setDialogOpen(true);
   };
 
