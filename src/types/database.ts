@@ -37,13 +37,13 @@ export interface Invitation {
   created_at: string;
 }
 
-export interface Schedule {
+// ── Schedule Architecture ──────────────────────────────────
+
+export interface ScheduleWeek {
   id: string;
   tenant_id: string;
-  title: string;
-  start_date: string;
-  end_date: string;
-  status: 'draft' | 'published' | 'archived';
+  week_start_date: string;
+  status: 'draft' | 'published' | 'locked';
   created_by: string | null;
   created_at: string;
   updated_at: string;
@@ -52,11 +52,72 @@ export interface Schedule {
 export interface Shift {
   id: string;
   tenant_id: string;
-  schedule_id: string;
-  user_id: string;
-  start_time: string;
-  end_time: string;
+  schedule_week_id: string;
+  contract_id: string | null;
+  start_datetime: string;
+  end_datetime: string;
+  label: string | null;
   notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ShiftAssignment {
+  id: string;
+  tenant_id: string;
+  shift_id: string;
+  user_id: string;
+  status: 'assigned' | 'confirmed' | 'swapped' | 'cancelled';
+  hourly_rate_snapshot: number | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SchedulePublication {
+  id: string;
+  tenant_id: string;
+  schedule_week_id: string;
+  published_by: string;
+  version: number;
+  published_at: string;
+}
+
+export interface PublicationSnapshot {
+  id: string;
+  tenant_id: string;
+  publication_id: string;
+  shift_id: string;
+  user_id: string;
+  start_datetime: string;
+  end_datetime: string;
+  hourly_rate: number | null;
+  metadata: Record<string, unknown>;
+}
+
+export interface AuditLog {
+  id: string;
+  tenant_id: string;
+  entity_type: string;
+  entity_id: string;
+  action: string;
+  performed_by: string | null;
+  old_values: Record<string, unknown> | null;
+  new_values: Record<string, unknown> | null;
+  created_at: string;
+}
+
+// ── Legacy (kept for backward compat) ──────────────────────
+
+/** @deprecated Use ScheduleWeek instead */
+export interface Schedule {
+  id: string;
+  tenant_id: string;
+  title: string;
+  start_date: string;
+  end_date: string;
+  status: 'draft' | 'published' | 'archived';
+  created_by: string | null;
   created_at: string;
   updated_at: string;
 }
