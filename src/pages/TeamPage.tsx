@@ -48,6 +48,7 @@ const TeamPage = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
 
   const isAdmin = hasRole('client_admin');
   const dateLocale = language === 'fr' ? frLocale : enCA;
