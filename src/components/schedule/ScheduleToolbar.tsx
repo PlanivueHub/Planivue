@@ -77,6 +77,12 @@ const ScheduleToolbar = ({
             {t('sched.create_schedule')}
           </Button>
         )}
+        {scheduleWeek?.status === 'draft' && onPublishWeek && (
+          <Button onClick={onPublishWeek} disabled={publishing} className="gap-2">
+            <Send className="h-4 w-4" />
+            {publishing ? t('common.loading') : t('sched.publish')}
+          </Button>
+        )}
       </div>
     </div>
   );
