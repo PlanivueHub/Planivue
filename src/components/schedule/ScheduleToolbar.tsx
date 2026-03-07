@@ -25,6 +25,8 @@ const ScheduleToolbar = ({
   onSearchChange,
   scheduleWeek,
   onCreateWeek,
+  onPublishWeek,
+  publishing,
 }: ScheduleToolbarProps) => {
   const { t, language } = useLanguage();
   const dateLocale = language === 'fr' ? frLocale : enCA;
