@@ -52,6 +52,7 @@ const TeamPage = () => {
 
   const isAdmin = hasRole('client_admin');
   const dateLocale = language === 'fr' ? frLocale : enCA;
+  const [tenantName, setTenantName] = useState<string>('—');
 
   const fetchTeam = async () => {
     if (!profile?.tenant_id) return;
@@ -90,7 +91,18 @@ const TeamPage = () => {
   };
 
   useEffect(() => {
-    if (isAdmin && profile?.tenant_id) fetchTeam();
+    if (isAdmin && profile?.tenant_id) {
+      fetchTeam();
+      // Fetch tenant name
+      supabase
+        .from('tenants')
+        .select('name')
+        .eq('id', profile.tenant_id)
+        .single()
+        .then(({ data }) => {
+          if (data) setTenantName((data as { name: string }).name);
+        });
+    }
   }, [isAdmin, profile?.tenant_id]);
 
   const filteredMembers = useMemo(() => {
@@ -266,7 +278,7 @@ const TeamPage = () => {
                       </TableCell>
 
                       {/* Company (tenant name placeholder) */}
-                      <TableCell className="text-muted-foreground">—</TableCell>
+                      <TableCell className="text-muted-foreground">{tenantName}</TableCell>
 
                       {/* Status */}
                       <TableCell>
