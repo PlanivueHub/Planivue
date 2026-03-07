@@ -5,17 +5,16 @@ import { Link, Navigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertCircle } from 'lucide-react';
+import { AlertCircle, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import LanguageToggle from '@/components/layout/LanguageToggle';
 import ThemeToggle from '@/components/layout/ThemeToggle';
-import planivueLogo from '@/assets/planivue-logo.png';
 
 const Login = () => {
   const { signIn, user, loading } = useAuth();
   const { t } = useLanguage();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -40,85 +39,102 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen">
-      {/* Left panel - branding */}
-      <div className="hidden w-1/2 flex-col justify-between bg-primary/5 p-12 lg:flex">
-        <div className="flex items-center gap-3">
-          <img src={planivueLogo} alt="PlanivueHub" className="h-12 w-12 object-contain" />
-          <span className="font-display text-xl font-bold">{t('app.name')}</span>
-        </div>
-        <div>
-          <h2 className="font-display text-4xl font-bold leading-tight">
-            {t('app.tagline')}
-          </h2>
-          <p className="mt-4 max-w-md text-lg text-muted-foreground">
-            {t('auth.login_subtitle')}
-          </p>
-        </div>
-        <div />
+    <div className="flex min-h-screen items-center justify-center bg-background px-4">
+      {/* Top-right controls */}
+      <div className="absolute right-6 top-6 flex items-center gap-1">
+        <ThemeToggle />
+        <LanguageToggle />
       </div>
 
-      {/* Right panel - form */}
-      <div className="flex flex-1 flex-col items-center justify-center px-6">
-        <div className="absolute right-6 top-6 flex items-center gap-1">
-          <ThemeToggle />
-          <LanguageToggle />
-        </div>
+      <div className="w-full max-w-md">
+        {/* Card */}
+        <div className="rounded-2xl border border-border/50 bg-card p-8 shadow-xl">
+          {/* Header */}
+          <div className="mb-6">
+            <h1 className="font-display text-2xl font-bold text-card-foreground">
+              {t('auth.welcome_back')}
+            </h1>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {t('auth.login_subtitle')}
+            </p>
+          </div>
 
-         <Card className="w-full max-w-md border-border/50 shadow-lg">
-           <CardHeader className="space-y-1 text-center">
-             <div className="mx-auto mb-2 lg:hidden">
-               <img src={planivueLogo} alt="PlanivueHub" className="mx-auto h-16 w-16 object-contain" />
-             </div>
-            <CardTitle className="font-display text-2xl">{t('auth.login')}</CardTitle>
-            <CardDescription>{t('auth.login_subtitle')}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
-                  <AlertCircle className="h-4 w-4 shrink-0" />
-                  {error}
-                </div>
-              )}
+          <form onSubmit={handleSubmit} className="space-y-5">
+            {error && (
+              <div className="flex items-center gap-2 rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">
+                <AlertCircle className="h-4 w-4 shrink-0" />
+                {error}
+              </div>
+            )}
 
-              <div className="space-y-2">
-                <Label htmlFor="email">{t('auth.email')}</Label>
+            {/* Email */}
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-card-foreground">
+                {t('auth.email')}
+              </Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="email"
                   type="email"
+                  placeholder="john@example.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   autoComplete="email"
+                  className="pl-10"
                 />
               </div>
+            </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="password">{t('auth.password')}</Label>
+            {/* Password */}
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-card-foreground">
+                {t('auth.password')}
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                 <Input
                   id="password"
-                  type="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder="••••••"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   autoComplete="current-password"
+                  className="pl-10 pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                  tabIndex={-1}
+                >
+                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
               </div>
+            </div>
 
-              <Button type="submit" className="w-full" disabled={submitting}>
-                {submitting ? t('auth.loading') : t('auth.login_btn')}
-              </Button>
+            {/* Divider */}
+            <div className="relative flex items-center py-1">
+              <div className="flex-1 border-t border-border" />
+              <span className="px-3 text-xs text-muted-foreground">{t('auth.or_sign_in_email')}</span>
+              <div className="flex-1 border-t border-border" />
+            </div>
 
-              <p className="text-center text-sm text-muted-foreground">
-                {t('auth.no_account')}{' '}
-                <Link to="/register" className="font-medium text-primary hover:underline">
-                  {t('auth.register')}
-                </Link>
-              </p>
-            </form>
-          </CardContent>
-        </Card>
+            {/* Submit */}
+            <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={submitting}>
+              {submitting ? t('auth.loading') : t('auth.login_btn')}
+            </Button>
+
+            <p className="text-center text-sm text-muted-foreground">
+              {t('auth.no_account')}{' '}
+              <Link to="/register" className="font-medium text-primary hover:underline">
+                {t('auth.create_account')}
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );
