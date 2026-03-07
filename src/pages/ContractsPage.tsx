@@ -108,7 +108,7 @@ const ContractsPage = () => {
       value: value ? parseFloat(value) : null,
       description: description || null,
       billing_rate: billingRate ? parseFloat(billingRate) : null,
-      break_rules: breakRules,
+      break_rules: breakRules as any,
     };
 
     if (editing) {
