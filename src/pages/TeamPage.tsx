@@ -115,7 +115,7 @@ const TeamPage = () => {
     }
     await supabase.from('user_roles').delete().eq('user_id', userId).eq('role', currentRole);
     await supabase.from('user_roles').insert({ user_id: userId, tenant_id: profile?.tenant_id, role: newRole });
-    toast.success(t('emp.role_updated'));
+    toast.success(t('empmgmt.role_updated'));
     fetchTeam();
   };
 
