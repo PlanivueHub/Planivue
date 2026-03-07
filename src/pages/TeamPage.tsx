@@ -295,9 +295,9 @@ const TeamPage = () => {
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
-                                <AlertDialogTitle>{t('emp.remove_title')}</AlertDialogTitle>
+                                <AlertDialogTitle>{t('empmgmt.remove_title')}</AlertDialogTitle>
                                 <AlertDialogDescription>
-                                  {t('emp.remove_confirm')} <strong>{member.full_name || member.email}</strong>?
+                                  {t('empmgmt.remove_confirm')} <strong>{member.full_name || member.email}</strong>?
                                 </AlertDialogDescription>
                               </AlertDialogHeader>
                               <AlertDialogFooter>
