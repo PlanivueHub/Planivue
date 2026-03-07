@@ -112,7 +112,7 @@ const SchedulesPage = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(t('sched.reverted_to_draft'));
+      toast.success(t('sched.published'));
       setScheduleWeek({ ...scheduleWeek, status: 'draft' });
     }
     setPublishing(false);
