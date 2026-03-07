@@ -25,6 +25,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Profile, AppRole, UserRole } from '@/types/database';
+import EmployeeRateEditor from '@/components/team/EmployeeRateEditor';
 
 interface TeamMember extends Profile {
   roles: AppRole[];
