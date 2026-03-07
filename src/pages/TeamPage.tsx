@@ -340,6 +340,12 @@ const TeamPage = () => {
           </>
         )}
       </div>
+
+      <AddEmployeeDialog
+        open={addDialogOpen}
+        onOpenChange={setAddDialogOpen}
+        onEmployeeAdded={fetchTeam}
+      />
     </div>
   );
 };
