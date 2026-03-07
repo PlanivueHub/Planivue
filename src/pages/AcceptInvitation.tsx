@@ -84,9 +84,11 @@ const AcceptInvitation = () => {
       const userId = authData.user.id;
 
       // Use security definer function to atomically accept invitation
-      const { error: rpcError } = await supabase.rpc('accept_invitation' as any, {
+      const { error: rpcError } = await supabase.rpc('accept_invitation', {
         _user_id: userId,
-        _token: invitation.token,
+        _invitation_id: invitation.id,
+        _tenant_id: invitation.tenant_id,
+        _role: invitation.role,
         _full_name: fullName,
       });
 

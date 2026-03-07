@@ -76,7 +76,7 @@ const Dashboard = () => {
         shifts: shiftsRes.count ?? 0,
       });
 
-      if (contractsDataRes.data) setContracts(contractsDataRes.data as unknown as Contract[]);
+      if (contractsDataRes.data) setContracts(contractsDataRes.data as Contract[]);
       setLoading(false);
     };
 

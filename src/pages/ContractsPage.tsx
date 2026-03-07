@@ -63,7 +63,7 @@ const ContractsPage = () => {
       .select('*')
       .eq('tenant_id', profile.tenant_id)
       .order('created_at', { ascending: false });
-    if (data) setContracts(data as unknown as Contract[]);
+    if (data) setContracts(data as Contract[]);
     setLoading(false);
   };
 
@@ -108,7 +108,7 @@ const ContractsPage = () => {
       value: value ? parseFloat(value) : null,
       description: description || null,
       billing_rate: billingRate ? parseFloat(billingRate) : null,
-      break_rules: breakRules as any,
+      break_rules: breakRules,
     };
 
     if (editing) {
@@ -120,7 +120,7 @@ const ContractsPage = () => {
         ...payload,
         tenant_id: profile.tenant_id,
         created_by: user.id,
-      } as any);
+      });
       if (error) toast.error(error.message);
       else toast.success(t('contract.created'));
     }
