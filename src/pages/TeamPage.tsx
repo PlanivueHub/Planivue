@@ -200,7 +200,7 @@ const TeamPage = () => {
         {loading ? (
           <p className="py-12 text-center text-muted-foreground">{t('common.loading')}</p>
         ) : filteredMembers.length === 0 ? (
-          <p className="py-12 text-center text-muted-foreground">{t('emp.no_members')}</p>
+          <p className="py-12 text-center text-muted-foreground">{t('empmgmt.no_members')}</p>
         ) : (
           <>
             <Table>
