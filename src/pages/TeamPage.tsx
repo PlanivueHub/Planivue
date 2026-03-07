@@ -91,7 +91,18 @@ const TeamPage = () => {
   };
 
   useEffect(() => {
-    if (isAdmin && profile?.tenant_id) fetchTeam();
+    if (isAdmin && profile?.tenant_id) {
+      fetchTeam();
+      // Fetch tenant name
+      supabase
+        .from('tenants')
+        .select('name')
+        .eq('id', profile.tenant_id)
+        .single()
+        .then(({ data }) => {
+          if (data) setTenantName((data as { name: string }).name);
+        });
+    }
   }, [isAdmin, profile?.tenant_id]);
 
   const filteredMembers = useMemo(() => {
