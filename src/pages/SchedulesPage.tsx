@@ -4,6 +4,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Navigate } from 'react-router-dom';
 import { CalendarDays } from 'lucide-react';
+import { toast } from 'sonner';
 import type { ScheduleWeek } from '@/types/database';
 import WeekNavigator from '@/components/schedule/WeekNavigator';
 import WeeklyGrid from '@/components/schedule/WeeklyGrid';
