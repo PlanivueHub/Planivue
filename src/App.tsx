@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
+// eslint-disable-next-line react-refresh/only-export-components
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
