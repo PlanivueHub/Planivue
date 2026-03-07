@@ -33,6 +33,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { Profile, AppRole, UserRole } from '@/types/database';
+import AddEmployeeDialog from '@/components/team/AddEmployeeDialog';
 
 interface TeamMember extends Profile {
   roles: AppRole[];
@@ -47,6 +48,7 @@ const TeamPage = () => {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [page, setPage] = useState(1);
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
 
   const isAdmin = hasRole('client_admin');
   const dateLocale = language === 'fr' ? frLocale : enCA;
@@ -188,7 +190,7 @@ const TeamPage = () => {
             <Upload className="h-3.5 w-3.5" />
             {t('empmgmt.import_csv')}
           </Button>
-          <Button size="sm" className="gap-1.5">
+          <Button size="sm" className="gap-1.5" onClick={() => setAddDialogOpen(true)}>
             <UserPlus className="h-3.5 w-3.5" />
             {t('empmgmt.add_employee')}
           </Button>
@@ -338,6 +340,12 @@ const TeamPage = () => {
           </>
         )}
       </div>
+
+      <AddEmployeeDialog
+        open={addDialogOpen}
+        onOpenChange={setAddDialogOpen}
+        onEmployeeAdded={fetchTeam}
+      />
     </div>
   );
 };
