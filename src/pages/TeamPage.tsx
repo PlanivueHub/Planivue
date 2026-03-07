@@ -275,7 +275,7 @@ const TeamPage = () => {
                             : 'bg-amber-500/15 text-amber-500 hover:bg-amber-500/20 border-0'
                           }
                         >
-                          {isActive ? t('emp.active') : t('emp.inactive')}
+                          {isActive ? t('empmgmt.active') : t('empmgmt.inactive')}
                         </Badge>
                       </TableCell>
 
