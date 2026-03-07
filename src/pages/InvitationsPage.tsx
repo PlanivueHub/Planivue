@@ -56,7 +56,7 @@ const InvitationsPage = () => {
 
     const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 
-    const { error } = await supabase
+    const { data: inserted, error } = await supabase
       .from('invitations')
       .insert({
         tenant_id: profile.tenant_id,
@@ -64,12 +64,38 @@ const InvitationsPage = () => {
         role,
         invited_by: user.id,
         expires_at: expiresAt,
-      });
+      })
+      .select()
+      .single();
 
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(t('inv.success'));
+      // Send invitation email via edge function
+      const inviteLink = `${window.location.origin}/invite/${(inserted as Invitation).token}`;
+      try {
+        const { data: tenantData } = await supabase
+          .from('tenants')
+          .select('name')
+          .eq('id', profile.tenant_id)
+          .single();
+
+        await supabase.functions.invoke('send-invitation-email', {
+          body: {
+            email,
+            inviteLink,
+            invitedByName: profile.full_name || profile.email,
+            tenantName: tenantData?.name || '',
+            role,
+          },
+        });
+        toast.success(t('inv.email_sent'));
+      } catch (emailErr) {
+        console.error('Failed to send invitation email:', emailErr);
+        toast.success(t('inv.success'));
+        toast.info(t('inv.email_failed'));
+      }
+
       setEmail('');
       setRole('client_employee');
       setDialogOpen(false);

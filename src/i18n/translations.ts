@@ -137,6 +137,8 @@ export const translations = {
   'inv.copied': { fr: 'Lien copié !', en: 'Link copied!' },
   'inv.no_invitations': { fr: 'Aucune invitation', en: 'No invitations' },
   'inv.success': { fr: 'Invitation créée avec succès', en: 'Invitation created successfully' },
+  'inv.email_sent': { fr: 'Email d\'invitation envoyé !', en: 'Invitation email sent!' },
+  'inv.email_failed': { fr: 'L\'email n\'a pas pu être envoyé. Partagez le lien manuellement.', en: 'Email could not be sent. Share the link manually.' },
   'inv.delete_confirm': { fr: 'Supprimer cette invitation ?', en: 'Delete this invitation?' },
 
   // Accept invitation
