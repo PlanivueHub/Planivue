@@ -25,6 +25,7 @@ const SchedulesPage = () => {
   const [scheduleWeek, setScheduleWeek] = useState<ScheduleWeek | null>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [publishing, setPublishing] = useState(false);
 
   const weekStartStr = currentWeekStart.toISOString().split('T')[0];
 
