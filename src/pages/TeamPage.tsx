@@ -278,7 +278,7 @@ const TeamPage = () => {
                       </TableCell>
 
                       {/* Company (tenant name placeholder) */}
-                      <TableCell className="text-muted-foreground">—</TableCell>
+                      <TableCell className="text-muted-foreground">{tenantName}</TableCell>
 
                       {/* Status */}
                       <TableCell>
