@@ -455,6 +455,7 @@ export const translations = {
   'fin.wage_rate': { fr: 'Taux salaire', en: 'Wage Rate' },
   'fin.bill_rate': { fr: 'Taux fact.', en: 'Bill Rate' },
   'fin.totals': { fr: 'Totaux', en: 'Totals' },
+  'fin.no_shifts': { fr: 'Aucun quart de travail trouvé. Créez des quarts dans la page Horaires.', en: 'No shifts found. Create shifts in the Schedules page.' },
 } as const;
 
 export type TranslationKey = keyof typeof translations;
