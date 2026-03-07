@@ -52,6 +52,7 @@ const TeamPage = () => {
 
   const isAdmin = hasRole('client_admin');
   const dateLocale = language === 'fr' ? frLocale : enCA;
+  const [tenantName, setTenantName] = useState<string>('—');
 
   const fetchTeam = async () => {
     if (!profile?.tenant_id) return;
