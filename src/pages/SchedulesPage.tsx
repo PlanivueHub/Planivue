@@ -4,6 +4,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { supabase } from '@/integrations/supabase/client';
 import { Navigate } from 'react-router-dom';
 import { CalendarDays } from 'lucide-react';
+import { toast } from 'sonner';
 import type { ScheduleWeek } from '@/types/database';
 import WeekNavigator from '@/components/schedule/WeekNavigator';
 import WeeklyGrid from '@/components/schedule/WeeklyGrid';
@@ -24,6 +25,7 @@ const SchedulesPage = () => {
   const [scheduleWeek, setScheduleWeek] = useState<ScheduleWeek | null>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+  const [publishing, setPublishing] = useState(false);
 
   const weekStartStr = currentWeekStart.toISOString().split('T')[0];
 
@@ -82,6 +84,23 @@ const SchedulesPage = () => {
     });
   };
 
+  const publishWeek = async () => {
+    if (!scheduleWeek) return;
+    setPublishing(true);
+    const { error } = await supabase
+      .from('schedule_weeks')
+      .update({ status: 'published' })
+      .eq('id', scheduleWeek.id);
+
+    if (error) {
+      toast.error(error.message);
+    } else {
+      toast.success(t('sched.published'));
+      setScheduleWeek({ ...scheduleWeek, status: 'published' });
+    }
+    setPublishing(false);
+  };
+
   return (
     <div className="animate-fade-in space-y-6">
       {/* Header */}
@@ -101,6 +120,8 @@ const SchedulesPage = () => {
         onSearchChange={setSearch}
         scheduleWeek={scheduleWeek}
         onCreateWeek={createWeek}
+        onPublishWeek={publishWeek}
+        publishing={publishing}
       />
 
       {/* Weekly Grid */}

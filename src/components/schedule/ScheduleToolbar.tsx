@@ -2,7 +2,7 @@ import { useLanguage } from '@/i18n/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, ChevronRight, Search, Plus } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Search, Plus, Send } from 'lucide-react';
 import { format, addDays } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import type { ScheduleWeek } from '@/types/database';
@@ -14,6 +14,8 @@ interface ScheduleToolbarProps {
   onSearchChange: (v: string) => void;
   scheduleWeek: ScheduleWeek | null;
   onCreateWeek: () => void;
+  onPublishWeek?: () => void;
+  publishing?: boolean;
 }
 
 const ScheduleToolbar = ({
@@ -23,6 +25,8 @@ const ScheduleToolbar = ({
   onSearchChange,
   scheduleWeek,
   onCreateWeek,
+  onPublishWeek,
+  publishing,
 }: ScheduleToolbarProps) => {
   const { t, language } = useLanguage();
   const dateLocale = language === 'fr' ? frLocale : enCA;
@@ -71,6 +75,12 @@ const ScheduleToolbar = ({
           <Button onClick={onCreateWeek} className="gap-2">
             <Plus className="h-4 w-4" />
             {t('sched.create_schedule')}
+          </Button>
+        )}
+        {scheduleWeek?.status === 'draft' && onPublishWeek && (
+          <Button onClick={onPublishWeek} disabled={publishing} className="gap-2">
+            <Send className="h-4 w-4" />
+            {publishing ? t('common.loading') : t('sched.publish')}
           </Button>
         )}
       </div>
