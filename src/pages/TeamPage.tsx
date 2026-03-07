@@ -175,9 +175,10 @@ const TeamPage = () => {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>{t('auth.full_name')}</TableHead>
+                 <TableHead>{t('auth.full_name')}</TableHead>
                   <TableHead>{t('auth.email')}</TableHead>
                   <TableHead>{t('inv.role')}</TableHead>
+                  <TableHead>{t('emp_detail.hourly_rate')}</TableHead>
                   <TableHead>{t('team.joined')}</TableHead>
                   <TableHead className="text-right">{t('saas.actions')}</TableHead>
                 </TableRow>
