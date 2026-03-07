@@ -20,6 +20,7 @@ import TeamPage from "./pages/TeamPage";
 import SchedulesPage from "./pages/SchedulesPage";
 import MySchedulePage from "./pages/MySchedulePage";
 import ContractsPage from "./pages/ContractsPage";
+import FinancialsPage from "./pages/FinancialsPage";
 import AvailabilityPage from "./pages/AvailabilityPage";
 import SettingsPage from "./pages/SettingsPage";
 import NotFound from "./pages/NotFound";
