@@ -43,6 +43,7 @@ const AppSidebar = () => {
 
     // Employee
     { label: t('nav.my_schedule'), icon: CalendarDays, href: '/my-schedule', roles: ['client_employee'] },
+    { label: t('avail.title'), icon: CalendarDays, href: '/availability', roles: ['client_employee', 'client_admin', 'client_manager'] },
     { label: t('nav.dashboard'), icon: LayoutDashboard, href: '/employee-dashboard', roles: ['client_employee'] },
 
     // All

@@ -81,6 +81,7 @@ const App = () => (
                     <MySchedulePage />
                   </ProtectedRoute>
                 } />
+                <Route path="/availability" element={<AvailabilityPage />} />
                 <Route path="/settings" element={<SettingsPage />} />
               </Route>
 
