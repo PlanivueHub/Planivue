@@ -120,6 +120,8 @@ const SchedulesPage = () => {
         onSearchChange={setSearch}
         scheduleWeek={scheduleWeek}
         onCreateWeek={createWeek}
+        onPublishWeek={publishWeek}
+        publishing={publishing}
       />
 
       {/* Weekly Grid */}
