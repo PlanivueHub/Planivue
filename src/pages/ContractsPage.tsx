@@ -23,7 +23,8 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { fr as frLocale, enCA } from 'date-fns/locale';
 import { cn } from '@/lib/utils';
-import type { Contract } from '@/types/database';
+import type { Contract, BreakRule } from '@/types/database';
+import BreakRulesEditor from '@/components/contracts/BreakRulesEditor';
 
 type ContractStatus = 'draft' | 'active' | 'completed' | 'cancelled';
 
