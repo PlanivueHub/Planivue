@@ -84,6 +84,11 @@ const App = () => (
                     <ContractsPage />
                   </ProtectedRoute>
                 } />
+                <Route path="/financials" element={
+                  <ProtectedRoute roles={['client_admin', 'client_manager']}>
+                    <FinancialsPage />
+                  </ProtectedRoute>
+                } />
                 <Route path="/my-schedule" element={
                   <ProtectedRoute roles={['client_employee']}>
                     <MySchedulePage />

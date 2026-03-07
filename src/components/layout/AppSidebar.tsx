@@ -41,6 +41,7 @@ const AppSidebar = () => {
     { label: t('nav.invitations'), icon: Mail, href: '/invitations', roles: ['client_admin'] },
     { label: t('nav.schedules'), icon: CalendarDays, href: '/schedules', roles: ['client_admin', 'client_manager'] },
     { label: t('nav.contracts'), icon: FileText, href: '/contracts', roles: ['client_admin', 'client_manager'] },
+    { label: t('nav.financials'), icon: DollarSign, href: '/financials', roles: ['client_admin', 'client_manager'] },
 
     // Employee
     { label: t('nav.my_schedule'), icon: CalendarDays, href: '/my-schedule', roles: ['client_employee'] },
