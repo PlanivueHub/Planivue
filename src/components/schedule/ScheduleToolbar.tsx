@@ -14,6 +14,8 @@ interface ScheduleToolbarProps {
   onSearchChange: (v: string) => void;
   scheduleWeek: ScheduleWeek | null;
   onCreateWeek: () => void;
+  onPublishWeek?: () => void;
+  publishing?: boolean;
 }
 
 const ScheduleToolbar = ({
