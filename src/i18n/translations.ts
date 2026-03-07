@@ -8,7 +8,7 @@ export const translations = {
   'nav.schedules': { fr: 'Horaires', en: 'Schedules' },
   'nav.settings': { fr: 'Paramètres', en: 'Settings' },
   'nav.invitations': { fr: 'Invitations', en: 'Invitations' },
-  'nav.team': { fr: 'Équipe', en: 'Team' },
+  'nav.employees': { fr: 'Employés', en: 'Employees' },
   'nav.contracts': { fr: 'Contrats', en: 'Contracts' },
   'nav.my_schedule': { fr: 'Mon horaire', en: 'My Schedule' },
   'nav.logout': { fr: 'Déconnexion', en: 'Logout' },
