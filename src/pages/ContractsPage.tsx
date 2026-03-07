@@ -120,7 +120,7 @@ const ContractsPage = () => {
         ...payload,
         tenant_id: profile.tenant_id,
         created_by: user.id,
-      });
+      } as any);
       if (error) toast.error(error.message);
       else toast.success(t('contract.created'));
     }
