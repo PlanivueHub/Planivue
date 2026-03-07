@@ -4,8 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { BarChart3, ArrowRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { BarChart3, ArrowRight, Download, FileText } from 'lucide-react';
 import { calculateFinancials } from '@/lib/financial-engine';
+import { downloadCsv, printElementAsPdf } from '@/lib/export-utils';
 import type { OvertimeConfig, PremiumConfig, BreakConfig } from '@/types/financials';
 import { cn } from '@/lib/utils';
 
@@ -38,6 +40,8 @@ const ComparativeAnalysis = ({ employerCostPct, overtime, premiums }: Props) => 
       style: 'currency', currency: 'CAD', minimumFractionDigits: 2,
     }).format(v);
 
+  const fmtNum = (v: number) => v.toFixed(2);
+
   const diff = {
     total_cost: scenarios[1].total_cost - scenarios[0].total_cost,
     revenue: scenarios[1].revenue - scenarios[0].revenue,
@@ -45,16 +49,62 @@ const ComparativeAnalysis = ({ employerCostPct, overtime, premiums }: Props) => 
     overtime_cost: scenarios[1].overtime_cost - scenarios[0].overtime_cost,
   };
 
+  const handleCsvExport = () => {
+    const metrics = [
+      t('fin.regular'), t('fin.overtime'), t('fin.gross_wage'),
+      t('fin.total_cost'), t('fin.revenue'), t('fin.profit'), t('fin.margin'),
+    ];
+    const getValues = (s: typeof scenarios[0]) => [
+      s.regular_hours.toFixed(1) + 'h',
+      s.overtime_hours.toFixed(1) + 'h',
+      fmtNum(s.gross_wage),
+      fmtNum(s.total_cost),
+      fmtNum(s.revenue),
+      fmtNum(s.profit),
+      fmtNum(s.margin) + '%',
+    ];
+
+    const csvRows = metrics.map((metric, i) => ({
+      Metric: metric,
+      [`${scenarios[0].hours}h/${t('fin.week')}`]: getValues(scenarios[0])[i],
+      [`${scenarios[1].hours}h/${t('fin.week')}`]: getValues(scenarios[1])[i],
+      'Δ Impact': i === 0 ? '' :
+        i === 1 ? fmtNum(diff.overtime_cost) :
+        i === 3 ? fmtNum(diff.total_cost) :
+        i === 4 ? fmtNum(diff.revenue) :
+        i === 5 ? fmtNum(diff.profit) : '',
+    }));
+
+    downloadCsv(csvRows, `comparative-analysis-${new Date().toISOString().slice(0, 10)}`);
+  };
+
+  const handlePdfExport = () => {
+    printElementAsPdf('comparative-analysis-print', t('fin.comparative_title'));
+  };
+
   return (
     <div className="space-y-6">
-      {/* Inputs */}
       <Card className="border-border/50">
         <CardHeader>
-          <CardTitle className="font-display text-base flex items-center gap-2">
-            <BarChart3 className="h-4 w-4 text-primary" />
-            {t('fin.comparative_title')}
-          </CardTitle>
-          <CardDescription>{t('fin.comparative_desc')}</CardDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="font-display text-base flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-primary" />
+                {t('fin.comparative_title')}
+              </CardTitle>
+              <CardDescription>{t('fin.comparative_desc')}</CardDescription>
+            </div>
+            <div className="flex gap-1.5">
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={handleCsvExport}>
+                <Download className="h-3.5 w-3.5" />
+                CSV
+              </Button>
+              <Button variant="outline" size="sm" className="gap-1.5 text-xs" onClick={handlePdfExport}>
+                <FileText className="h-3.5 w-3.5" />
+                PDF
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-4">
@@ -76,8 +126,7 @@ const ComparativeAnalysis = ({ employerCostPct, overtime, premiums }: Props) => 
         </CardContent>
       </Card>
 
-      {/* Side-by-side scenarios */}
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div id="comparative-analysis-print" className="grid gap-4 lg:grid-cols-3">
         {scenarios.map((s, i) => {
           const marginColor = s.margin >= 25 ? 'text-success' : s.margin >= 10 ? 'text-warning' : 'text-destructive';
           return (
@@ -107,7 +156,6 @@ const ComparativeAnalysis = ({ employerCostPct, overtime, premiums }: Props) => 
           );
         })}
 
-        {/* Difference / Impact */}
         <Card className="border-border/50 bg-muted/30">
           <CardHeader className="pb-2">
             <CardTitle className="font-display text-sm flex items-center gap-2">
