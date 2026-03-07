@@ -62,7 +62,7 @@ const App = () => (
                     <EmployeeDashboard />
                   </ProtectedRoute>
                 } />
-                <Route path="/team" element={
+                <Route path="/employees" element={
                   <ProtectedRoute roles={['client_admin']}>
                     <TeamPage />
                   </ProtectedRoute>

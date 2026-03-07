@@ -173,17 +173,22 @@ export const translations = {
   'inv.invalid_token': { fr: 'Ce lien d\'invitation est invalide ou expiré', en: 'This invitation link is invalid or expired' },
   'inv.already_accepted': { fr: 'Cette invitation a déjà été acceptée', en: 'This invitation has already been accepted' },
 
-  // Team
-  'team.title': { fr: 'Gestion de l\'équipe', en: 'Team Management' },
-  'team.subtitle': { fr: 'Gérez les membres de votre organisation', en: 'Manage your organization members' },
-  'team.members': { fr: 'Membres', en: 'Members' },
-  'team.no_members': { fr: 'Aucun membre trouvé', en: 'No members found' },
-  'team.joined': { fr: 'Inscrit le', en: 'Joined' },
-  'team.role_updated': { fr: 'Rôle mis à jour', en: 'Role updated' },
-  'team.member_removed': { fr: 'Membre retiré', en: 'Member removed' },
-  'team.cannot_change_own': { fr: 'Vous ne pouvez pas modifier votre propre rôle', en: 'You cannot change your own role' },
-  'team.remove_title': { fr: 'Retirer le membre', en: 'Remove Member' },
-  'team.remove_confirm': { fr: 'Voulez-vous vraiment retirer', en: 'Are you sure you want to remove' },
+  // Employees
+  'emp.title': { fr: 'Gestion des employés', en: 'Employee Management' },
+  'emp.subtitle': { fr: 'Gérez votre plateforme de planification depuis ce panneau central', en: 'Manage your workforce scheduling platform from this central admin panel' },
+  'emp.no_members': { fr: 'Aucun employé trouvé', en: 'No employees found' },
+  'emp.status': { fr: 'Statut', en: 'Status' },
+  'emp.last_login': { fr: 'Dernière connexion', en: 'Last Login' },
+  'emp.active': { fr: 'Actif', en: 'Active' },
+  'emp.inactive': { fr: 'Inactif', en: 'Inactive' },
+  'emp.company': { fr: 'Entreprise', en: 'Company' },
+  'emp.add_employee': { fr: 'Ajouter un employé', en: 'Add Employee' },
+  'emp.import_csv': { fr: 'Importer CSV', en: 'Import CSV' },
+  'emp.role_updated': { fr: 'Rôle mis à jour', en: 'Role updated' },
+  'emp.member_removed': { fr: 'Employé retiré', en: 'Employee removed' },
+  'emp.cannot_change_own': { fr: 'Vous ne pouvez pas modifier votre propre rôle', en: 'You cannot change your own role' },
+  'emp.remove_title': { fr: 'Retirer l\'employé', en: 'Remove Employee' },
+  'emp.remove_confirm': { fr: 'Voulez-vous vraiment retirer', en: 'Are you sure you want to remove' },
 
   // Schedules
   'sched.title': { fr: 'Gestion des horaires', en: 'Schedule Management' },
