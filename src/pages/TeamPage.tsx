@@ -123,7 +123,7 @@ const TeamPage = () => {
     if (userId === user?.id) return;
     await supabase.from('user_roles').delete().eq('user_id', userId);
     await supabase.from('profiles').update({ tenant_id: null }).eq('id', userId);
-    toast.success(t('emp.member_removed'));
+    toast.success(t('empmgmt.member_removed'));
     fetchTeam();
   };
 
