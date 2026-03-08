@@ -114,10 +114,9 @@ const SaasTenantsPage = () => {
   const deleteTenant = async () => {
     if (!deleteTarget) return;
     setDeleting(true);
-    const { error } = await supabase
-      .from('tenants')
-      .delete()
-      .eq('id', deleteTarget.id);
+    const { error } = await supabase.rpc('delete_tenant_cascade', {
+      _tenant_id: deleteTarget.id,
+    });
     if (error) {
       toast({ title: t('common.error'), description: error.message, variant: 'destructive' });
     } else {
