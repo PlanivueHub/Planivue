@@ -42,11 +42,7 @@ const TENANT_CASCADE_DELETE_STEPS: CascadeDeleteStep[] = [
   { table: 'availability_exceptions', column: 'tenant_id' },
   { table: 'invitations', column: 'tenant_id' },
   { table: 'audit_logs', column: 'tenant_id' },
-  {
-    table: 'user_roles',
-    column: 'tenant_id',
-    apply: (query) => query.neq('role', 'saas_owner'),
-  },
+  { table: 'user_roles', column: 'tenant_id' },
   { table: 'profiles', column: 'tenant_id' },
 ];
 
