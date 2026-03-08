@@ -22,7 +22,13 @@ interface EnrichedTenant extends Tenant {
   last_activity: string | null;
 }
 
-const TENANT_CASCADE_DELETE_STEPS = [
+type CascadeDeleteStep = {
+  table: string;
+  column: string;
+  apply?: (query: any) => any;
+};
+
+const TENANT_CASCADE_DELETE_STEPS: CascadeDeleteStep[] = [
   { table: 'publication_snapshots', column: 'tenant_id' },
   { table: 'schedule_publications', column: 'tenant_id' },
   { table: 'shift_assignments', column: 'tenant_id' },
@@ -36,22 +42,74 @@ const TENANT_CASCADE_DELETE_STEPS = [
   { table: 'availability_exceptions', column: 'tenant_id' },
   { table: 'invitations', column: 'tenant_id' },
   { table: 'audit_logs', column: 'tenant_id' },
-  { table: 'user_roles', column: 'tenant_id' },
+  {
+    table: 'user_roles',
+    column: 'tenant_id',
+    apply: (query) => query.neq('role', 'saas_owner'),
+  },
   { table: 'profiles', column: 'tenant_id' },
-  { table: 'tenants', column: 'id' },
-] as const;
+];
 
 const isSkippableSchemaCacheError = (error: { code?: string; message?: string } | null) => {
   if (!error) return false;
   return error.code === 'PGRST205' || error.code === '42P01' || (error.message?.includes('schema cache') ?? false);
 };
 
+const deleteTenantDirect = async (tenantId: string) => {
+  const { data, error } = await supabase
+    .from('tenants')
+    .delete()
+    .eq('id', tenantId)
+    .select('id');
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return (data?.length ?? 0) > 0;
+};
+
+const invokeDeleteTenantCascade = async (tenantId: string) => {
+  const payloads = [{ _tenant_id: tenantId }, { tenant_id: tenantId }];
+  let lastError: { code?: string; message?: string } | null = null;
+
+  for (const payload of payloads) {
+    const { error } = await (supabase.rpc as any)('delete_tenant_cascade', payload);
+
+    if (!error) {
+      return null;
+    }
+
+    lastError = error;
+
+    if (error.code !== 'PGRST202') {
+      break;
+    }
+  }
+
+  return lastError;
+};
+
 const deleteTenantCascadeFallback = async (tenantId: string) => {
+  const deletedDirectly = await deleteTenantDirect(tenantId);
+  if (deletedDirectly) return;
+
   for (const step of TENANT_CASCADE_DELETE_STEPS) {
-    const { error } = await (supabase.from as any)(step.table).delete().eq(step.column, tenantId);
+    let query = (supabase.from as any)(step.table).delete().eq(step.column, tenantId);
+    if (step.apply) {
+      query = step.apply(query);
+    }
+
+    const { error } = await query;
+
     if (error && !isSkippableSchemaCacheError(error)) {
       throw new Error(`${step.table}: ${error.message}`);
     }
+  }
+
+  const deletedAfterCascade = await deleteTenantDirect(tenantId);
+  if (!deletedAfterCascade) {
+    throw new Error('Delete was blocked by permissions or remaining linked records.');
   }
 };
 
