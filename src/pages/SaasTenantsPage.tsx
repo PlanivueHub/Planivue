@@ -41,10 +41,15 @@ const TENANT_CASCADE_DELETE_STEPS = [
   { table: 'tenants', column: 'id' },
 ] as const;
 
+const isSkippableSchemaCacheError = (error: { code?: string; message?: string } | null) => {
+  if (!error) return false;
+  return error.code === 'PGRST205' || error.code === '42P01' || (error.message?.includes('schema cache') ?? false);
+};
+
 const deleteTenantCascadeFallback = async (tenantId: string) => {
   for (const step of TENANT_CASCADE_DELETE_STEPS) {
     const { error } = await (supabase.from as any)(step.table).delete().eq(step.column, tenantId);
-    if (error) {
+    if (error && !isSkippableSchemaCacheError(error)) {
       throw new Error(`${step.table}: ${error.message}`);
     }
   }
@@ -367,3 +372,4 @@ const SaasTenantsPage = () => {
 };
 
 export default SaasTenantsPage;
+
