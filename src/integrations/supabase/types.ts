@@ -706,6 +706,10 @@ export type Database = {
         Args: { _full_name: string; _token: string; _user_id: string }
         Returns: undefined
       }
+      delete_tenant_cascade: {
+        Args: { _tenant_id: string }
+        Returns: undefined
+      }
       get_platform_metrics: { Args: never; Returns: Json }
       get_user_tenant_id: { Args: never; Returns: string }
       has_role: {
