@@ -114,7 +114,7 @@ const SaasTenantsPage = () => {
   const deleteTenant = async () => {
     if (!deleteTarget) return;
     setDeleting(true);
-    const { error } = await supabase.rpc('delete_tenant_cascade', {
+    const { error } = await (supabase.rpc as any)('delete_tenant_cascade', {
       _tenant_id: deleteTarget.id,
     });
     if (error) {
