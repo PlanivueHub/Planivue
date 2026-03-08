@@ -70,7 +70,12 @@ const deleteTenantDirect = async (tenantId: string) => {
 };
 
 const invokeDeleteTenantCascade = async (tenantId: string) => {
-  const payloads = [{ _tenant_id: tenantId }, { tenant_id: tenantId }];
+  const payloads = [
+    { _tenant_id: tenantId },
+    { tenant_id: tenantId },
+    { p_tenant_id: tenantId },
+    { id: tenantId },
+  ];
   let lastError: { code?: string; message?: string } | null = null;
 
   for (const payload of payloads) {
