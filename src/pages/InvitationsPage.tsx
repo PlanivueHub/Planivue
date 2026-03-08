@@ -64,7 +64,7 @@ const InvitationsPage = () => {
       .limit(1);
 
     if (existing && existing.length > 0) {
-      toast.error(t('inv.duplicate_email') || 'An invitation for this email already exists');
+      toast.error('An invitation for this email already exists');
       setSubmitting(false);
       return;
     }
