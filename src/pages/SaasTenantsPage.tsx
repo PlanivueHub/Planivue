@@ -210,9 +210,7 @@ const SaasTenantsPage = () => {
 
     let errorMessage: string | null = null;
 
-    const { error: rpcError } = await (supabase.rpc as any)('delete_tenant_cascade', {
-      _tenant_id: tenantId,
-    });
+    const rpcError = await invokeDeleteTenantCascade(tenantId);
 
     if (rpcError) {
       if (rpcError.code === 'PGRST202') {
@@ -222,7 +220,7 @@ const SaasTenantsPage = () => {
           errorMessage = fallbackError instanceof Error ? fallbackError.message : t('common.error');
         }
       } else {
-        errorMessage = rpcError.message;
+        errorMessage = rpcError.message ?? t('common.error');
       }
     }
 
