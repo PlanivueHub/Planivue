@@ -93,7 +93,7 @@ const SaasTenantsPage = () => {
               .eq('tenant_id', tenant.id)
               .order('updated_at', { ascending: false })
               .limit(1)
-              .single();
+              .maybeSingle();
 
             return {
               ...tenant,
@@ -146,18 +146,20 @@ const SaasTenantsPage = () => {
 
   const deleteTenant = async () => {
     if (!deleteTarget) return;
+    const tenantId = deleteTarget.id;
+
     setDeleting(true);
 
     let errorMessage: string | null = null;
 
     const { error: rpcError } = await (supabase.rpc as any)('delete_tenant_cascade', {
-      _tenant_id: deleteTarget.id,
+      _tenant_id: tenantId,
     });
 
     if (rpcError) {
       if (rpcError.code === 'PGRST202') {
         try {
-          await deleteTenantCascadeFallback(deleteTarget.id);
+          await deleteTenantCascadeFallback(tenantId);
         } catch (fallbackError) {
           errorMessage = fallbackError instanceof Error ? fallbackError.message : t('common.error');
         }
@@ -166,9 +168,24 @@ const SaasTenantsPage = () => {
       }
     }
 
+    if (!errorMessage) {
+      const { data: stillExists, error: verifyError } = await supabase
+        .from('tenants')
+        .select('id')
+        .eq('id', tenantId)
+        .maybeSingle();
+
+      if (verifyError) {
+        errorMessage = verifyError.message;
+      } else if (stillExists) {
+        errorMessage = 'Tenant could not be removed. Please try again.';
+      }
+    }
+
     if (errorMessage) {
       toast({ title: t('common.error'), description: errorMessage, variant: 'destructive' });
     } else {
+      setTenants((prev) => prev.filter((tenant) => tenant.id !== tenantId));
       toast({ title: t('saas.tenant_deleted') });
       setDeleteTarget(null);
       fetchTenants();
