@@ -22,6 +22,34 @@ interface EnrichedTenant extends Tenant {
   last_activity: string | null;
 }
 
+const TENANT_CASCADE_DELETE_STEPS = [
+  { table: 'publication_snapshots', column: 'tenant_id' },
+  { table: 'schedule_publications', column: 'tenant_id' },
+  { table: 'shift_assignments', column: 'tenant_id' },
+  { table: 'shifts', column: 'tenant_id' },
+  { table: 'schedule_weeks', column: 'tenant_id' },
+  { table: 'schedules', column: 'tenant_id' },
+  { table: 'contracts', column: 'tenant_id' },
+  { table: 'tenant_financial_config', column: 'tenant_id' },
+  { table: 'employee_details', column: 'tenant_id' },
+  { table: 'recurring_availability', column: 'tenant_id' },
+  { table: 'availability_exceptions', column: 'tenant_id' },
+  { table: 'invitations', column: 'tenant_id' },
+  { table: 'audit_logs', column: 'tenant_id' },
+  { table: 'user_roles', column: 'tenant_id' },
+  { table: 'profiles', column: 'tenant_id' },
+  { table: 'tenants', column: 'id' },
+] as const;
+
+const deleteTenantCascadeFallback = async (tenantId: string) => {
+  for (const step of TENANT_CASCADE_DELETE_STEPS) {
+    const { error } = await (supabase.from as any)(step.table).delete().eq(step.column, tenantId);
+    if (error) {
+      throw new Error(`${step.table}: ${error.message}`);
+    }
+  }
+};
+
 const SaasTenantsPage = () => {
   const { hasRole } = useAuth();
   const { t, language } = useLanguage();
@@ -114,16 +142,33 @@ const SaasTenantsPage = () => {
   const deleteTenant = async () => {
     if (!deleteTarget) return;
     setDeleting(true);
-    const { error } = await (supabase.rpc as any)('delete_tenant_cascade', {
+
+    let errorMessage: string | null = null;
+
+    const { error: rpcError } = await (supabase.rpc as any)('delete_tenant_cascade', {
       _tenant_id: deleteTarget.id,
     });
-    if (error) {
-      toast({ title: t('common.error'), description: error.message, variant: 'destructive' });
+
+    if (rpcError) {
+      if (rpcError.code === 'PGRST202') {
+        try {
+          await deleteTenantCascadeFallback(deleteTarget.id);
+        } catch (fallbackError) {
+          errorMessage = fallbackError instanceof Error ? fallbackError.message : t('common.error');
+        }
+      } else {
+        errorMessage = rpcError.message;
+      }
+    }
+
+    if (errorMessage) {
+      toast({ title: t('common.error'), description: errorMessage, variant: 'destructive' });
     } else {
       toast({ title: t('saas.tenant_deleted') });
       setDeleteTarget(null);
       fetchTenants();
     }
+
     setDeleting(false);
   };
 
