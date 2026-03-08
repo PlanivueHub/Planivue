@@ -54,6 +54,21 @@ const InvitationsPage = () => {
     if (!profile?.tenant_id || !user) return;
     setSubmitting(true);
 
+    // Check for existing pending invitation with same email
+    const { data: existing } = await supabase
+      .from('invitations')
+      .select('id')
+      .eq('tenant_id', profile.tenant_id)
+      .eq('email', email)
+      .is('accepted_at', null)
+      .limit(1);
+
+    if (existing && existing.length > 0) {
+      toast.error('An invitation for this email already exists');
+      setSubmitting(false);
+      return;
+    }
+
     const expiresAt = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
 
     const { data: inserted, error } = await supabase
