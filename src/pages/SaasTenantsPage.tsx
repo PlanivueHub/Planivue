@@ -93,7 +93,7 @@ const SaasTenantsPage = () => {
               .eq('tenant_id', tenant.id)
               .order('updated_at', { ascending: false })
               .limit(1)
-              .single();
+              .maybeSingle();
 
             return {
               ...tenant,
