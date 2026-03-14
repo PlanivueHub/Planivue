@@ -116,6 +116,13 @@ const Login = () => {
             </div>
 
 
+            {/* Forgot password */}
+            <div className="flex justify-end">
+              <Link to="/forgot-password" className="text-sm font-medium text-primary hover:underline">
+                {t('auth.forgot_password')}
+              </Link>
+            </div>
+
             {/* Submit */}
             <Button type="submit" className="w-full h-11 text-base font-semibold" disabled={submitting}>
               {submitting ? t('auth.loading') : t('auth.login_btn')}

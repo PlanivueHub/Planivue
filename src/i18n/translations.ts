@@ -32,6 +32,16 @@ export const translations = {
   'auth.register_subtitle': { fr: 'Créez votre organisation et commencez à planifier', en: 'Create your organization and start planning' },
   'auth.loading': { fr: 'Chargement...', en: 'Loading...' },
   'auth.employee_notice': { fr: 'Vous êtes employé ? Demandez une invitation à votre administrateur.', en: 'Are you an employee? Ask your administrator for an invitation link.' },
+  'auth.forgot_password': { fr: 'Mot de passe oublié ?', en: 'Forgot password?' },
+  'auth.forgot_title': { fr: 'Réinitialiser le mot de passe', en: 'Reset Password' },
+  'auth.forgot_subtitle': { fr: 'Entrez votre courriel pour recevoir un lien de réinitialisation', en: 'Enter your email to receive a reset link' },
+  'auth.send_reset_link': { fr: 'Envoyer le lien', en: 'Send Reset Link' },
+  'auth.reset_email_sent': { fr: 'Un courriel de réinitialisation a été envoyé. Vérifiez votre boîte de réception.', en: 'A reset email has been sent. Check your inbox.' },
+  'auth.back_to_login': { fr: 'Retour à la connexion', en: 'Back to login' },
+  'auth.reset_password': { fr: 'Nouveau mot de passe', en: 'New Password' },
+  'auth.reset_subtitle': { fr: 'Choisissez un nouveau mot de passe pour votre compte', en: 'Choose a new password for your account' },
+  'auth.reset_btn': { fr: 'Réinitialiser le mot de passe', en: 'Reset Password' },
+  'auth.password_reset_success': { fr: 'Mot de passe mis à jour avec succès !', en: 'Password updated successfully!' },
 
   // SaaS Dashboard
   'saas.title': { fr: 'Tableau de bord Plateforme', en: 'Platform Dashboard' },
